@@ -119,14 +119,14 @@ app/views/layouts/_messages.html.erb
     bundle install
     rails g simple_form:install --bootstrap
 
-{% codeblock lang:ruby %}
+```
 <div class="control-group">
   <%= f.label :name, :class => 'control-label' %>
   <div class="controls">
     <%= f.text_field :name, :class => 'text_field' %>
   </div>
 </div>
-{% endcodeblock %}
+```
 
 修改为
 

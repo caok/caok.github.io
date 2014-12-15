@@ -9,6 +9,7 @@ categories: [Rails]
 加密保存到数据库中的字段，但不影响读写
 增加一个字段encrypt_key用来保存key
 
+{% highlight ruby %}
 before_save :encrypt_note
 def encrypt_note
   salt  = SecureRandom.random_bytes(64)
@@ -37,6 +38,7 @@ end
     end
   end
 end
+{% endhighlight %}
 
 read_attribute(:xxx)更加底层，能忽略model中定义的与attribute同名的方法，取得数据库中该attribute真实的值
 
@@ -47,7 +49,7 @@ read_attribute(:xxx)更加底层，能忽略model中定义的与attribute同名�
 Overwriting default accessors
 All column values are automatically available through basic accessors on the Active Record object, but sometimes you want to specialize this behavior. This can be done by overwriting the default accessors (using the same name as the attribute) and calling read_attribute(attr_name) and write_attribute(attr_name, value) to actually change things.
 
-```ruby
+{% highlight ruby %}
 class Song < ActiveRecord::Base
   def length=(minutes)
     write_attribute(:length, minutes.to_i * 60)
@@ -57,7 +59,7 @@ class Song < ActiveRecord::Base
     read_attribute(:length) / 60
   end
 end
-```
+{% endhighlight %}
 
 You can alternatively use self[:attribute]=(value) and self[:attribute] instead of write_attribute(:attribute, value) and read_attribute(:attribute)
 
