@@ -1,0 +1,171 @@
+---
+layout: post
+title: "A networked resource monitoring tool Munin"
+date: 2013-07-17 21:50
+comments: true
+categories: [Ubuntu]
+---
+
+[Munin](http://munin-monitoring.org) 是一个非常好用安装和设置方便的监测软件，可监控核心系统资源，包括内存、磁盘、CPU 占用、服务器应用如 MySQL、Apache 和 Squid 等。
+
+live demo : [http://munin.ping.uio.no](http://munin.ping.uio.no)
+
+### 1.安装
+```sh
+# Munin master(服务器端)
+apt-get install munin  
+  
+# Munin node(客户端)
+apt-get install munin-node  
+```
+
+<!-- more -->
+
+munin主要文件
+```
+- /etc/munin 配置文件
+- /etc/munin/munin.conf 主服务配置文件
+- /etc/munin/munin-node.conf 节点配置文件
+- /etc/munin/plugins 插件存放
+- /var/lib/munin 统计数据文件
+- /var/cache/munin/www Htmldir 输出文件
+```
+
+### 2.配置master
+```sh /etc/munin.conf
+# Configfile for Munin master  
+dbdir       /var/lib/munin
+htmldir     /var/www/munin
+logdir      /var/log/munin
+rundir      /var/run/munin
+  
+# This is an example of the correct way to activate Nagios warnings
+contact.nagios.command /usr/local/nagios/bin/send_nsca nagioshost.example.com -c /usr/local/nagios/etc/send_nsca.cfg -to 60
+
+# From and including the first host, no more global directives can be defined.
+# Everything after one host definition belongs to that host, until another host definition is found.
+
+[foo.example.com]             # Defines the group "example.com" and then
+                              # "foo.example.com" under that group.
+  address localhost           # The address (IP or host name) of the host, where munin-node is running.
+
+[example.com;bar.example.com] # Same as above, but with an explicit definition.
+                              # of the host's group.
+  address bar.example.com     # The address.
+  df.contacts no              # Don't warn Nagios (or whatever) if the 'df' plugin exceed warning values.
+
+[Groupname;]                  # Defines the group "Groupname"
+  contacts nagios             # Notifications shall go to nagios for hosts in this group
+
+[Groupname;baz.example.com]   # Associates the host baz.example.com to this group
+  address baz.example.com     # The address of the host, where munin-node is running.
+  update no                   # Specifies that no services on this host should be updated by munin-update
+```
+
+### 3.配置node
+```sh /etc/munin-node.conf
+log_level 4
+log_file /var/log/munin/munin-node.log
+port 4949
+pid_file /var/run/munin/munin-node.pid
+background 1
+host *
+user root
+group root
+setsid yes
+ignore_file ~$
+ignore_file \.bak$
+ignore_file %$
+ignore_file \.dpkg-(tmp|new|old|dist)$
+ignore_file \.rpm(save|new)$
+# host_name localhost.localdomain
+allow ^127\.0\.0\.1$           #设置哪些主机可以访问
+allow ^192\.168\.10\.3$
+cidr_allow 10.20.30.0/16
+cidr_deny 10.10.30.12/24
+```
+
+### 4.配置网页监控
+需要一个 web servie 帮忙, 安装 apache
+```sh
+sudo apt-get install apache2
+```
+apache配置
+```sh /etc/apache2/sites-available/default
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  ServerName   munin.example.com
+  DocumentRoot /var/cache/munin/www/
+
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride None
+  </Directory>
+
+  LogLevel notice
+  CustomLog /var/log/apache2/munin.access.log combined
+  ErrorLog /var/log/apache2/munin.error.log
+  ServerSignature On
+</VirtualHost>
+```
+或者用nginx，将nginx设置一下root，指定到/var/www/html/munin下面就行了
+
+### 5.常用命令
+```sh
+munin-cron #定时任务
+munin-run  #执行plugins
+munin-node-configure --shell #查看有哪些plugins
+```
+
+### 6.实例
+#### 需要监控的服务器
+```
+主服务器 192.168.1.1
+客户端：
+mysql服务器 192.168.1.2
+web服务器 192.168.1.3
+文件服务器 192.168.1.4
+```
+#### 在对应的服务器上安装munin(服务器)和munin-node(客户端)
+
+#### munin服务器(192.168.1.1)端配置
+```sh /etc/munin/munin.conf
+//找到以下内容把前面的注释去掉
+#dbdir  /var/lib/munin
+#htmldir /var/www/html/munin
+#logdir /var/log/munin
+#rundir  /var/run/munin
+#tmpldir /etc/munin/templates
+
+//添加以下内容
+# a simple host tree
+[mysql]
+    address 192.168.1.2
+    use_node_name yes
+
+[web]
+    address 192.168.1.3
+    use_node_name yes
+
+[files]
+    address 192.168.1.4
+    use_node_name yes
+```
+#### munin客户(192.168.1.2,192.168.1.3,192.168.1.4)端配置
+```sh /etc/munin/munin-node.conf
+//在allow ^127\.0\.0\.1$下面在加上一行
+allow ^192\.168\.1\.1$
+```
+#### 启动munin
+```sh
+sudo /etc/init.d/munin start        #服务器
+sudo /etc/init.d/munin-node start   #客户端
+```
+
+### 参考
+* http://munin-monitoring.org/wiki/LinuxInstallation
+* http://munin.ping.uio.no
+* http://www.iteye.com/topic/539319
+* http://mouse-lin.github.io/server/2013/07/08/munin1
+* http://zhumeng8337797.blog.163.com/blog/static/100768914201110173927649
+* https://github.com/mouse-lin/munin-alert-email

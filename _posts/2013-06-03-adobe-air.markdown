@@ -1,0 +1,78 @@
+---
+layout: post
+title: "adobe air"
+date: 2013-06-03 15:56
+comments: true
+categories: [Web]
+---
+
+### 1.[安装](http://help.adobe.com/en_US/air/build/WS2d8d13466044a7337d7adee012406959c52-8000.html#WS2d8d13466044a7334d609ef512411141082-8000)
+* (1)下载AIR SDK(http://www.adobe.com/devnet/air/air-sdk-download.html)
+* (2)提取SDK到一个文件夹下，如C:\AIRSDK，并将其加入到环境变量PATH中
+* (3)安装jdk
+
+### 2.使用
+项目主要包括三部分1.hello-app.xml, 2.hello.html, 3.AIRAliases.js(AIR SDK的frameworks文件夹中可以找到)
+<!-- more -->
+
+#### (1)创建air应用的描述文件hello-app.xml
+```xml
+<?xml version="1.0" encoding="UTF-8"?> 
+<application xmlns="http://ns.adobe.com/air/application/2.7"> 
+  <id>examples.html.HelloWorld</id> 
+  <versionNumber>0.1</versionNumber> 
+  <filename>HelloWorld</filename> 
+  <initialWindow> 
+    <content>hello.html</content> 
+    <visible>true</visible> 
+    <width>400</width> 
+    <height>200</height> 
+  </initialWindow> 
+</application>
+```
+
+#### (2)创建应用的html页面hello.html
+```html
+<html>
+  <head>
+    <title>Hello World</title>
+    <script type="text/javascript" src="AIRAliases.js"></script>
+    <script type="text/javascript">
+      function appLoad(){
+        air.trace("Hello World");
+      }
+    </script>
+  </head>
+ 
+  <body onLoad="appLoad()">
+    <h1>Hello World</h1>
+  </body>
+</html>
+```
+
+#### (3)运行，查看效果
+```sh
+adl hello-app.xml
+```
+
+#### (4)打包
+生成一个自签名的证书和密钥对
+```sh
+adt -certificate -cn SelfSigned 1024-RSA sampleCert.pfx samplePassword
+```
+以下示例创建 EXE 文件（Windows 的本机安装程序文件）：
+```sh
+adt -package -storetype pkcs12 -keystore sampleCert.pfx -target native myApp.exe hello-app.xml hello.html resources
+```
+
+以下示例基于 AIR 文件创建 EXE 文件（Windows 的本机安装程序文件）
+```sh
+adt -package -storetype pkcs12 -keystore sampleCert.pfx myApp.air hello-app.xml hello.html AIRAliases.js
+adt -package -target native myApp.exe myApp.air
+```
+
+#### 参考:
+* http://help.adobe.com/en_US/air/build/WS5b3ccc516d4fbf351e63e3d118666ade46-7ecc.html
+* http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac1e63e3d128cdca935b-8000.html
+* http://help.adobe.com/en_US/air/build/WSfffb011ac560372f-6fa6d7e0128cca93d31-8000.html
+* http://zhan.renren.com/asblog?gid=3602888497999221597&from=post&checked=true

@@ -1,0 +1,67 @@
+---
+layout: post
+title: "nginx"
+date: 2013-03-02 16:49
+comments: true
+categories: [Nginx]
+---
+
+Nginx 是一个高性能的 HTTP 和 反向代理 服务器，也是最流行的web服务器之一。最近我尝试了下，记录下它最简单的使用。
+<!-- more -->
+
+#### 安装
+    sudo apt-get install nginx
+
+#### 启动
+    sudo service nginx start
+
+你也可以查看下它的帮助
+    /etc/init.d/nginx -h
+
+它的配置文件一般都放在/etc/nginx/sites-available中，nginx中会默认加载/etc/nginx/sites-enabled中的文件。
+
+在/etc/nginx/sites-enabled中默认有个default
+    default -->  /etc/nginx/sites-available/default
+
+你可以设置属于自己的nginx配置文件
+```sh  /etc/nginx/sites-available/rails_nginx.conf
+server {
+  listen 80 default;
+  server_name example.com;
+  client_max_body_size 4G;
+  keepalive_timeout 5;
+ 
+  root /u/app/example_app/current/public;
+ 
+  try_files $uri/index.html $uri.html $uri @unicorn;
+  location @unicorn {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    proxy_pass http://localhost:9000;
+  }
+ 
+  # Rails error pages
+  error_page 500 502 503 504 /500.html;
+  location = /500.html {
+    root /u/app/example_app/current/public;
+  }
+}
+```
+这里原先用unicorn启动了应用，放在了9000端口上，并且用nginx去调用它。
+
+写好自己的配置文件后，就需要让nginx去调用该配置。
+    cd /etc/nginx/sites-enabled
+    ls -l
+    sudo rm default
+    sudo ln -s /etc/nginx/sites-available/rails_nginx.conf rails
+
+重启nginx
+    sudo service nginx restart
+
+#### 参考：
+* http://nginx.org/cn/
+* http://railscasts.com/episodes/293-nginx-unicorn
+* http://sirupsen.com/setting-up-unicorn-with-nginx/
+* https://github.com/defunkt/unicorn/blob/master/examples/unicorn.conf.rb
+* https://github.com/defunkt/unicorn/blob/master/examples/nginx.conf

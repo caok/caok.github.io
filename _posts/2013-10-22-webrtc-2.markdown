@@ -1,0 +1,69 @@
+---
+layout: post
+title: "webrtc #2"
+date: 2013-10-22 18:42
+comments: true
+categories: [Webrtc]
+---
+
+调用完摄像头之后，就是要进行流媒体通信了，这块也是webrtc中的核心。webrtc中实现了网页间的流媒体通信，特别要提的是它传送流媒体是p2p的，不需要通过server进行转发。
+
+#### 两个浏览器实时媒体交换的过程:
+* 1.在媒体端，输入设备(摄像头和耳麦)被打开用来捕获 音/视频。(getUserMedia)
+* 2.来自输入设备的媒体流被编码成可在网络中传送的数据包。
+* 3.在媒体传输的目的地，这个数据包被译码重新组织成媒体流。
+* 4.媒体流被发送到输出设备。(html5中的video)
+
+#### 所需的server:
+* Signaling Server :  转发端点信号创建连接,用来创建结点之间最初的连接,可以使用socket.io或websocket等
+* ICE Server       :  用于穿透([STUN](http://baike.baidu.com/link?url=9o6d67jEENjKpNfg9q2rlwEOMJg1XHhwJszVhDdJSH5bpciy8QbHnnEpn5kw_yfa), TURN)
+
+<!-- more -->
+
+ICE server可以采用公开的免费的STUN服务器, 而Signaling server我们可以使用socket.io简单搭建一个。
+
+或许有人会问“不是之前说webrtc不再需要服务器了吗？”， 实际上还是需要的，不过这里所需的服务器更多的是为了在最初的时候让结点之间建立通信。一旦建立通信之后，就不再需要服务器进行干涉。即此时你把上述两个服务器给关了，已建立连接的结点还是可以正常视频通信。
+
+#### Signaling Server主要交换三类信息:
+* 1.session control messages : 用来初始化或者关闭通信，或者报告错误
+* 2.Network configuration    : 本机的ip地址、端口等等
+* 3.Media capabilities       : 采用何种编码、分辨率，以及与它通信的结点
+
+###2.RTCPeerConnection
+一个RTCPeerConnection对象允许用户在两个浏览器之间直接通讯。
+
+本地跟本地通信的[示例代码](https://github.com/lashare/webRTC-example/blob/master/example2/index.html)
+
+两个浏览器间的通信[示例代码](https://github.com/lashare/webRTC-example/tree/master/example3)
+
+代码比较多，就不在贴出了，可以去上面两个示例代码的链接看看。
+
+这里介绍下RTCPeerConnection中的A和B建立通信的过程:
+
+* 1.A运行RTCPeerConnection中的createOffer()方法，发出建立通信的请求。它会传递RTCSessionDescription(即A的local Session description)
+* 2.在RTCSessionDescription这个回调函数中，A通过setLocalDescription去设置它的local description,然后通过signaling server把这个session description发送给B
+* 3.B设置A发给它的session description作为remote description(用setRemoteDescription)
+* 4.B运行RTCPeerConnection中的createAnswer()方法，对A发出的请求作出回应。在createAnswer()这个回调函数中，会传递一个RTCSessionDescription，B设置它作为一个local description, 并发送给A(因为B的remote description是通过A生成的，所以此时的local description是与A兼容的)
+* 5.当A收到B的session description，A通过setRemoteDescription将其设置为remote description
+* 6.通道建立成功！
+
+### 其他
+当然也可以直接使用大牛们分装好的库: [SimpleWebRTC](https://github.com/HenrikJoreteg/SimpleWebRTC), [WebRTC-Experiment](https://github.com/muaz-khan/WebRTC-Experiment)
+
+还有一个Open Source WebRTC Communications Platform: [licode](https://github.com/ging/licode) 据说是在几个里面建立连接速度最快的，有兴趣可以试一下。
+
+除此之外，还有一个别人的整理的webrtc的合集，在这里贴一下地址[https://docs.google.com/document/d/1idl_NYQhllFEFqkGQOLv8KBK8M3EVzyvxnKkHl4SuM8/edit](https://docs.google.com/document/d/1idl_NYQhllFEFqkGQOLv8KBK8M3EVzyvxnKkHl4SuM8/edit)
+
+### 参考:
+* http://www.html5rocks.com/en/tutorials/webrtc/basics/
+* http://bloggeek.me/multipoint-webrtc-intro/
+* https://github.com/webRTC/webRTC.io
+* https://github.com/HenrikJoreteg/SimpleWebRTC
+* https://github.com/ging/licode
+* https://github.com/muaz-khan/WebRTC-Experiment
+* https://bitbucket.org/webrtc/codelab
+* http://dev.w3.org/2011/webrtc/editor/webrtc-20111004.html#stream-api
+* http://docs.webplatform.org/wiki/apis/webrtc
+* http://www.codeproject.com/Articles/515192/Video-Conferencing-using-WebRTC
+* https://docs.google.com/document/d/1idl_NYQhllFEFqkGQOLv8KBK8M3EVzyvxnKkHl4SuM8/edit
+* https://github.com/LingyuCoder/SkyRTC-demo

@@ -1,0 +1,62 @@
+---
+layout: post
+title: "pm2"
+date: 2014-02-08 16:27
+comments: true
+categories: [NodeJs]
+---
+
+[PM2](https://github.com/Unitech/pm2) 用于在生产环境运行 node 应用。它会监控你的 app 变化并重新部署它们，不同之处在于，如果 PM2 遇到事故，它将立刻重启你的 node.js 应用，而且拥有日志功能。
+
+### 主要特性：
+
+* 内建负载均衡（使用Node cluster 集群模块）
+* 后台运行
+* 0秒停机重载
+* 具有Ubuntu和CentOS 的启动脚本
+* 停止不稳定的进程（避免无限循环）
+* 控制台检测
+* 提供 HTTP API
+* 远程控制和实时的接口API ( Nodejs 模块,允许和PM2进程管理器交互 )
+
+<!-- more -->
+
+### 安装
+```
+npm install pm2@latest -g
+```
+
+### 用法
+```
+$ pm2 start app.js -i 4           # 后台运行pm2，启动4个app.js 
+                                  # 也可以把'max' 参数传递给 start
+                                  # 正确的进程数目依赖于cpu的核心数目
+$ pm2 start app.js --name my-api  # 命名进程
+
+$ pm2 list                        # 显示所有进程状态
+$ pm2 list -m                     # Serious display
+$ pm2 monit                       # 监视所有进程(实时), 可以得到CPU的使用率和内存占用
+
+$ pm2 logs                        # 显示所有进程日志
+$ pm2 flush                       # 清空所有的进程日志
+
+$ pm2 stop all                    # 停止所有进程
+$ pm2 restart all                 # 重启所有进程
+$ pm2 reload all                  # 0秒停机重载进程 (用于 NETWORKED 进程)
+$ pm2 delete all                  # 杀死全部进程
+$ pm2 stop 0                      # 停止指定id为0的进程
+$ pm2 restart 0                   # 重启指定id为0的进程
+$ pm2 delete 0                    # 杀死指定id为0的进程
+
+$ pm2 startup ubuntu              # 产生 init 脚本 保持进程活着
+$ pm2 web                         # 运行健壮的 computer API endpoint (http://localhost:9615)
+$ pm2 dump                        # 备份当前被 pm2 管理的进程
+$ pm2 resurrect                   # 存储备份
+```
+
+当然我们也可以试试 [forever](https://github.com/nodejitsu/forever) 和 [cluster](https://github.com/LearnBoost/cluster)
+
+### 参考:
+* https://github.com/Unitech/pm2
+* http://www.douban.com/note/314200231
+* http://devo.ps/blog/2013/06/26/goodbye-node-forever-hello-pm2.html

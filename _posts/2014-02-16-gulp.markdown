@@ -1,0 +1,149 @@
+---
+layout: post
+title: "gulp"
+date: 2014-02-16 20:19
+comments: true
+categories: [NodeJs]
+---
+
+[Gulp](https://github.com/gulpjs/gulp) 是一款基于任务的设计模式的自动化工具。虽然许多人会推荐 [Grunt](https://github.com/gruntjs/grunt) 来实现项目的自动化，但了解了下后发现它的学习曲线有点高。这时发现了 Gulp ，它非常易于学习和使用，对我这种喜欢简单喜欢偷懒的人再适合不过了，而且我想要的功能也都有，所以就用它了，:)
+
+Gulp通过流和代码优于配置策略来尽量简化任务编写的工作。当使用流时，gulp去除了中间文件，只将最后的输出写入磁盘，整个过程因此变得更快。gulp采用代码优于配置的策略，让简单的事情继续简单，将复杂的任务变得可管理。
+
+<!-- more -->
+
+### 1.安装
+##### 全局安装
+```
+npm install gulp -g
+```
+##### 安装到项目
+```
+npm install gulp --save-dev
+```
+这样的话，就会把“gulp”加入到 package.json 文件中的 devDependencies 中去，用来表明项目需要依赖gulp 。
+
+### 2.选择gulp组件
+既然我们是用gulp来实现任务的自动话，那我们首先要确定自己的项目需要哪些任务：
+
+* 1.压缩图片
+* 2.合并，压缩，重命名css
+* 3.检查javascript
+* 4.合并、压缩、重命名javascript
+* 5.压缩html
+
+明确了任务之后，我们就要找到对应的gulp组件:
+
+* gulp-imagemin: 压缩图片
+* gulp-minify-css: 压缩css
+* gulp-jshint: 检查js
+* gulp-uglify: 压缩js
+* gulp-concat: 合并文件
+* gulp-rename: 重命名文件
+* gulp-htmlmin: 压缩html
+* gulp-notify: 提示信息
+
+更多gulp组件的话可以在这里找到：[search-gulp-plugins](http://gratimax.github.io/search-gulp-plugins/)
+
+### 3.安装组件的依赖
+```
+npm install gulp-imagemin gulp-minify-css gulp-jshint gulp-uglify gulp-concat gulp-rename gulp-htmlmin --save-dev 
+```
+如果以上命令提示权限错误，需要添加sudo再次尝试。
+
+### 4.编写gulp任务
+gulp通过gulpfile文件来知道我们要它完成那些任务，所以我们只要在项目根目录新建一个js文件并命名为gulpfile.js。
+
+gulp只有五个方法[src, dest, task, run, watch](https://github.com/gulpjs/gulp/blob/master/docs/API.md),  src和dest指定源文件和处理后文件的路径，watch用来监听文件的变化，task指定各个任务，run当然就是执行任务啦。
+
+```javascript gulpfile.js
+// 引入 gulp
+var gulp = require('gulp'); 
+
+// 引入组件
+var htmlmin = require('htmlmin'),
+    imagemin = require('gulp-imagemin'),
+    minifycss = require('gulp-minify-css'),
+    jshint = require('gulp-jshint'),
+    uglify = require('gulp-uglify'),
+    concat = require('gulp-concat'),
+    rename = require('gulp-rename'),
+    notify = require('gulp-notify');
+
+// 压缩图片
+gulp.task('images', function() {
+  return gulp.src('src/images/**/*')
+    .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
+    .pipe(gulp.dest('dist/images'))
+    .pipe(notify({ message: 'Images task complete' }));
+});
+
+// 合并、压缩、重命名css
+gulp.task('stylesheets', function() {
+  return gulp.src('src/stylesheets/*.css')
+    .pipe(concat('main.css'))
+    .pipe(gulp.dest('dist/stylesheets'))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(minifycss())
+    .pipe(gulp.dest('dist/stylesheets'))
+    .pipe(notify({ message: 'Stylesheets task complete' }));
+});
+
+// 检查js
+gulp.task('lint', function() {
+  return gulp.src('src/javascripts/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
+});
+
+// 合并，压缩js文件
+gulp.task('javascripts', function() {
+  return gulp.src('src/javascripts/*.js')
+    .pipe(concat('all.js'))
+    .pipe(gulp.dest('dist/javascripts'))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(uglify())
+    .pipe(gulp.dest('dist/javascripts'));
+    .pipe(notify({ message: 'Javascripts task complete' }));
+});
+
+//合并、压缩html
+gulp.task('htmls', function() {
+  return gulp.src('src/*.html')
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('./dist'));
+    .pipe(notify({ message: 'Htmls task complete' }));
+});
+
+// 默认任务
+gulp.task('default', function(){
+  gulp.run('images', 'stylesheets', 'lint', 'javascripts', 'htmls');
+
+  // 监听html文件变化
+  gulp.watch('src/*.html', function(){
+    gulp.run('htmls');
+  });
+
+  // Watch .css files
+  gulp.watch('src/stylesheets/*.css', ['stylesheets']);
+
+  // Watch .js files
+  gulp.watch('src/javascripts/*.js', ['lint', 'javascripts']);
+
+  // Watch image files
+  gulp.watch('src/images/**/*', ['images']);
+});
+```
+
+### 5.运行 Gulp
+在项目目录下执行 gulp 命令就会运行 default 任务：依次运行一遍 images、stylesheets、lint、javascripts、htmls这五个任务，然后监视各个文件的变动，如果有改动再执行相应的任务(如果有css文件改动时就会实行stylesheets任务)。
+
+当然也可以执行特定任务，如要执行“压缩、合并html”任务: gulp htmls
+
+
+### 参考:
+* https://github.com/gulpjs/gulp
+* http://markgoodyear.com/2014/01/getting-started-with-gulp
+* http://www.infoq.com/cn/news/2014/02/gulp
+* http://blog.segmentfault.com/laopopo/1190000000372547
+* http://blog.segmentfault.com/fenbox/1190000000372120

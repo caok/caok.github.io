@@ -1,0 +1,57 @@
+---
+layout: post
+title: "vagrant"
+date: 2013-07-06 20:21
+comments: true
+categories: [Ubuntu]
+---
+
+Vagrant是一个基于Ruby的工具，用于创建和部署虚拟化开发环境。它使用Oracle的开源VirtualBox虚拟化系统，使用Chef创建自动化虚拟环境。
+
+### 1.下载安装
+download from [http://downloads.vagrantup.com](http://downloads.vagrantup.com/)
+
+<!-- more -->
+
+### 2.一个简单的项目
+```sh
+vagrant box add precise32 http://files.vagrantup.com/precise32.box
+
+rails new demo && cd demo
+vagrant init precise32   # this will create the file of Vagrantfile
+vagrant up #启动
+vagrant ssh #登录
+```
+
+### 3.安装应用环境
+
+### 4.修改外部访问端口
+```sh  Vagrantfile
+config.vm.forward_port "rails", 3000, 3000
+```
+
+### 5.重新加载vagrant的配置文件
+```sh
+vagrant reload
+```
+
+### 6.vagrant 命令
+```sh
+vagrant ssh      # 通过ssh登录
+vagrant status   # 查看当前状态
+
+vagrant suspend  # 休眠
+vagrant resume   # 唤醒
+
+vagrant halt     # 关机
+vagrant up       # 启动
+
+vagrant packge   # 将其打包
+vagrant destroy  # 删除
+```
+
+#### 参考:
+* http://www.vagrantup.com
+* http://xuclv.blog.51cto.com/5503169/1239250
+* http://railscasts.com/episodes/292-virtual-machines-with-vagrant
+* http://blog.dcxn.com/2013/07/12/introduction-to-vagrant-for-rails-developers

@@ -1,0 +1,154 @@
+---
+layout: post
+title: "tmux"
+date: 2013-04-14 09:45
+comments: true
+categories: [Ubuntu, Tmux]
+---
+
+最近经常听说[tmux](http://baike.baidu.com/view/9065064.htm)的大名，但一直都没好好的试试。今天看了[happycasts](http://happycasts.net/episodes/41)和[impressive-ruby-productivity-with-vim-and-tmux](http://confreaks.com/videos/2291-larubyconf2013-impressive-ruby-productivity-with-vim-and-tmux),才知道这么晚使用是个多么不明智的选择。
+<!-- more -->
+
+### 1.安装
+    sudo apt-get install tmux
+
+### 2.使用
+开启tmux
+    tmux
+创建命名会话rails
+    tmux new-session -s rails
+在后台创建会话blog
+    tmux new-session -s blog -d
+列出会话清单
+    tmux list-sessions   或    tmux ls
+
+tmux命令都具有一个前缀命令(PREFIX)，默认的是Ctrl+b，可以自己修改，改为Ctrl+a。
+
+临时断开会话，有点像将其切换至后台(隐藏)，可以还原到原来的会话。
+    Ctrl-b d
+
+进入某个会话
+    tmux a
+    tmux a -t rails         # 进入rails会话
+
+关闭会话
+    tmux kill-session -t rails   # 关闭rails会话
+    tmux kill-server             # 关闭所有会话
+
+### 3.常见的快捷键用法
+```sh
+Ctrl-b d          # 隐藏，临时断开会话
+Ctrl-b c          # 新开一个窗口
+Ctrl-b &          # 退出当前窗口
+Ctrl-b ,          # 重命名窗口
+
+Ctrl-b 数字        # 选择几号窗口
+Ctrl-b n          # 切换到下一个窗口
+Ctrl-b p          # 切换到上一个窗口
+Ctrl-b l          # 切换到最后一个窗口
+Ctrl-b w          # 以菜单方式显示及选择窗口
+
+Ctrl-b "          # 模向分隔窗口
+Ctrl-b %          # 纵向分隔窗口
+
+Ctrl-b o          # 跳到下一个分隔小窗口
+Ctrl-b 上下键      # 上一个及下一个分隔小窗口
+
+Ctrl-b x          # 关闭当前光标处的分隔小窗口
+Ctrl-b !          # 关闭所有分隔小窗口
+
+Ctrl-b Ctrl-方向键 # 调整分隔窗口大小
+
+Ctrl-b ?          # 显示快捷键帮助
+Ctrl-b t          # 显示时钟
+```
+
+### 4.拷贝
+    Ctrl-b [         # 进入拷贝模式
+    Ctrl-b ]         # 粘帖
+
+具体过程
+```
+a.Ctrl-b [ 进入复制模式 
+b.按 space 开始复制，移动光标选择复制区域 
+c.按 Enter 复制并退出拷贝模式
+d.将光标移动到指定位置，按 Ctrl-b ] 粘贴 
+```
+如果不在配置文件中进行如下配置，在VIM中复制模式无法完成操作.
+
+在~/.tmux.conf中加入如下 
+    setw -g mode-keys vi
+
+### 5.配置
+```
+#设置PREFIX为Ctrl-a  
+set -g prefix C-a
+#解除Ctrl-b与PREFIX的对应关系  
+unbind C-b
+#copy-mode将快捷键设置为vi模式  
+setw -g mode-keys vi
+
+# 像vi一样分隔窗体
+bind s split-window -h
+bind v split-window -v
+# 像vi一样选择分隔的窗体
+# move arount panes wiht hjkl, as one would in vim after C-w
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# 重新调整窗格的大小
+bind < resize-pane -L 10
+bind > resize-pane -R 10
+bind - resize-pane -D 10
+bind + resize-pane -U 10
+
+#将r键设置为加载配置文件，并显示"reloaded!"信息
+bind r source-file ~/.tmux.conf \; display "Reloaded!"
+#设置终端颜色为256色
+set -g default-terminal "screen-256color"  
+#开启status-bar uft-8支持  
+set -g status-utf8 on  
+
+#设置pan前景色  
+set -g pane-border-fg green  
+#设置pane背景色  
+set -g pane-border-bg black  
+#设置活跃pane前景色  
+set -g pane-active-border-fg white  
+#设置活跃pane背景色  
+set -g pane-active-border-bg yellow  
+#设置消息前景色  
+set -g message-fg white  
+#设置消息背景色  
+set -g message-bg black  
+#设置消息高亮显示  
+set -g message-attr bright  
+#设置status-bar颜色  
+set -g status-fg white  
+set -g status-bg black  
+#设置窗口列表颜色  
+setw -g window-status-fg cyan  
+setw -g window-status-bg default  
+setw -g window-status-attr dim  
+#设置当前窗口在status bar中的颜色  
+setw -g window-status-current-fg white  
+setw -g window-status-current-bg red  
+setw -g window-status-current-attr bright  
+#设置status bar格式  
+set -g status-left-length 40  
+set -g status-left "#[fg=green]Session: #S #[fg=yellow]#I #[fg=cyan]#P"  
+set -g status-right "#[fg=cyan]%d %b %R"  
+set -g status-interval 60  
+set -g status-justify centre  
+#开启window事件提示  
+setw -g monitor-activity on  
+set -g visual-activity on  
+```
+
+#### 参考：
+* http://happycasts.net/episodes/41
+* http://jack-boy.iteye.com/blog/1586908
+* http://liuerfire.is-programmer.com/posts/32150.html
+* http://blog.csdn.net/yjj1s/article/details/6413172

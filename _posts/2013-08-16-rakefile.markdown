@@ -1,0 +1,183 @@
+---
+layout: post
+title: "如何手动编写Rakefile"
+date: 2013-08-16 19:51
+comments: true
+categories: [Ruby]
+---
+
+在rails中经常会看到[rake](https://github.com/jimweirich/rake)完成的多种自动化的任务，现在就简单介绍下如何从头写一个Rakefile。
+
+### 1.简单的示例(Default Task)
+```ruby Rakefile
+task :default => [:test]
+
+task :test do
+  ruby "test/unittest.rb"
+end
+```
+```sh
+% ls
+Rakefile     test/
+% rake
+(in /home/some_user/Projects/rake)
+ruby test/unittest.rb
+....unit test output here...
+```
+跑rake命令不带任何其他参数的时候，它会自动跑Rakefile文件中的default任务.
+
+<!-- more -->
+
+### 2.Dependencies
+```ruby Rakefile
+directory "tmp"
+
+file "tmp/hello.tmp" => "tmp" do
+  sh "echo 'Hello' > 'tmp/hello.tmp'"
+end
+```
+"tmp/hello.tmp"依赖于 directory "tmp"。当rake运行到directory "tmp"时，它会在运行"tmp/hello.tmp"这个task之前去创建一个tmp的目录。如果这里我们把task直接定义为"hello.tmp"的话，rake会直接在当前目录下找hello.tmp这个文件，会导致找不到。
+
+但task定义为"tmp/hello.tmp"之后，rake就能知道这个file task是否已经执行过了。
+```sh
+$ rake "tmp/hello.tmp"
+mkdir -p tmp
+echo 'Hello' > 'tmp/hello.tmp'
+
+$ rake "tmp/hello.tmp"
+```
+
+### 3.Running Other Tasks
+```ruby Rakefile
+task :turn_off_alarm do
+  puts "Turned off alarm. Would have liked 5 more minutes, though."
+end
+
+task :make_coffee do
+  cups = ENV["COFFEE_CUPS"] || 2
+  puts "Made #{cups} cups of coffee. Shakes are gone."
+end
+
+task :ready_for_the_day => [:turn_off_alarm, :make_coffee] do
+  puts "Ready for the day!"
+end
+```
+这个里面的"=>"相当于加入了依赖关系，执行ready_for_the_day之前会先执行turn_off_alarm和make_coffee
+```sh
+$ rake ready_for_the_day
+Turned off alarm. Would have liked 5 more minutes, though.
+Made 5 cups of coffee. Shakes are gone.
+Ready for the day!
+
+$ rake COFFEE_CUPS=5 make_coffee
+Made 5 cups of coffee. Shakes are gone.
+```
+
+### 4.Describing Your Tasks And Namespaces
+当然你也可以加上你对任务的藐视，以及加上一定的命名空间
+```ruby Rakefile
+namespace :morning do
+  task :turn_off_alarm do
+    puts "Turned off alarm. Would have liked 5 more minutes, though."
+  end
+end
+
+desc "Make coffee"
+task :make_coffee do
+  cups = ENV["COFFEE_CUPS"] || 2
+  puts "Made #{cups} cups of coffee. Shakes are gone."
+end
+
+task :ready_for_the_day => [:turn_off_alarm, :make_coffee] do
+  puts "Ready for the day!"
+end
+```
+```sh
+$ rake -T 或者 rake --tasks
+rake morning:turn_off_alarm
+rake make_coffee        # Make coffee
+rake ready_for_the_day
+```
+玩过rails的是不是特别熟悉，哈哈，这个就和rake db:migrate是一个道理
+
+### 5.调用task
+有时候会有这种情况：在一个task中调用之前已定义过的task
+```ruby
+namespace :afternoon do
+  task :make_coffee do
+    Rake::Task['morning:make_coffee'].invoke
+    puts "Ready for the rest of the day!"
+  end
+end
+```
+
+### 6.[如何实现类似 Rails Console 的东西](http://huacnlee.com/blog/how-to-create-your-owner-rails-console/)
+Rails 提供了一个 rails console，可以让我们很方便的在 启动 Web Server 之外直接调用代码、调用 Model 查询/修改数据等。
+```sh
+➜  ruby-china git:(master) rails c
+Loading development environment (Rails 4.0.0)
+irb(main):001:0> @post = Post.last
+irb(main):001:0> @post.update_attribute(:title, "Foo bar")
+```
+如何实现这个东西
+
+Ruby 标准库里面带有一个叫 IRB 的库，实际上，你现在就可以直接执行 irb 进入 Ruby 的控制台，在里面可以进行任何 Ruby 的代码执行。
+
+想要实现一个类似 Rails console 的东西，就需要用到 IRB 来启动控制台。
+
+来一个最简单的例子
+
+创建下面这些文件：
+```
+foo
+  Rakefile
+  post.rb
+```
+post.rb 来点简单的代码：
+```ruby  post.rb
+class Post
+  attr_accessor :title
+
+  def test(a)
+    [self.title,a].join(" = ")
+  end
+end
+```
+
+```ruby  Rakefile
+desc "Run Console"
+task :console do |t, args|
+  env = ENV['APP_ENV'] || 'development'
+  puts "Loading #{env} environment"
+  require "./post"
+  require "irb"
+  require 'irb/completion'
+  # 必须执行 ARGV.clear，不然 rake 后面的参数会被带到 IRB 里面
+  ARGV.clear
+  IRB.start
+end
+```
+现在就可以执行 rake console 进入你构建的 App 控制台了：
+```sh
+$ rake console
+Loading development environment
+irb(main):001:0> @post = Post.new
+=> #<Post:0x007fe9e5a62b98>
+irb(main):002:0> @post.title = "aabbcc"
+=> "aabbcc"
+irb(main):004:0> @post.test("ccddee")
+=> "aabbcc = ccddee"
+```
+
+#### 备注
+以上是一些汇总，主要参考了Jason Seifer的[Rake Tutorial](http://jasonseifer.com/2010/04/06/rake-tutorial#rails_models) 和 李华顺的[如何实现类似 Rails Console 的东西](http://huacnlee.com/blog/how-to-create-your-owner-rails-console/)
+
+#### 参考:
+* http://docs.rubyrake.org/
+* http://hlee.iteye.com/blog/364102
+* http://huacnlee.com/blog/how-to-create-your-owner-rails-console
+* http://rake.rubyforge.org/doc/rakefile_rdoc.html
+* http://rake.rubyforge.org/README_rdoc.html
+* http://jasonseifer.com/2010/04/06/rake-tutorial
+* http://martinfowler.com/articles/rake.html
+* https://github.com/jimweirich/rake/blob/master/doc/rakefile.rdoc
