@@ -17,18 +17,17 @@ categories: [Rails]
 
 user通过user_id有多个subscribe，每个subscribe通过多态belongs_to多种对象
 
-<!-- more -->
-
 首先我们定义一个subscribe的结构
-```ruby
+{% highlight ruby %}
 create_table "subscribes", force: true do |t|
   t.integer  "user_id"
   t.integer  "subscribable_id"
   t.string   "subscribable_type"
 end
-```
+{% endhighlight %}
+
 model中user和subscribe的关系(has_many)
-```ruby
+{% highlight ruby %}
 class User < ActiveRecord::Base
   has_many :subscribes
 end
@@ -36,9 +35,10 @@ end
 class Subscribe < ActiveRecord::Base
   belongs_to :user
 end
-```
+{% endhighlight %}
+
 model中video和subscribe的关系(polymorphic)
-```ruby
+{% highlight ruby %}
 class Subscribe < ActiveRecord::Base
   belongs_to :user
   belongs_to :subscribable, polymorphic: true     # 通过polymorphic关联到video和article
@@ -51,40 +51,42 @@ end
 class Article < ActiveRecord::Base
   has_many :subscribes, as: :subscribable
 end
-```
+{% endhighlight %}
+
 这样通过多态，我们就能分别在video和article中分别找到相应的subscribes
-```
+{% highlight ruby %}
 user.subscribes
 user.subscribes.first.subscribable ==> video/article
 video.subscribes
 video.subscribes.first.user
-```
+{% endhighlight %}
 
 接下来我们加人video和user直接的直接关联，可以通过video.users来访问到user，很简单，通过subscribe就行
-```ruby
+{% highlight ruby %}
 class Video < ActiveRecord::Base
   has_many :subscribes, as: :subscribable
   has_many :users, through: :subscribes
 end
-```
+{% endhighlight %}
+
 反过来，通过user.videos来访问到video，会麻烦点，我们一点点解释下
-```ruby
+{% highlight ruby %}
 class User < ActiveRecord::Base
   has_many :videos, through: :subscribes, source: :subscribable, source_type: "Video"
 end
-```
+{% endhighlight %}
 
 * :source 选项指定 has_many :through 关联的关联源名字。只有无法从关联名种解出关联源的名字时才需要设置这个选项。
 * :source_type 选项指定 has_many :through 关联中用来处理多态关联的关联源类型。
 * :through 选项指定用来执行查询的连接模型。
 
 这里还是比较怪的，这里的videos实际上是该用户订阅的videos，所以我们这再改写下
-```ruby
+{% highlight ruby %}
 has_many :subscribed_videos, through: :subscribes, class_name: "Video", source: :subscribable, source_type: "Video"
-```
+{% endhighlight %}
 
 ### 完整的代码如下
-```ruby
+{% highlight ruby %}
 create_table "subscribes", force: true do |t|
   t.integer  "user_id"
   t.integer  "subscribable_id"
@@ -111,7 +113,7 @@ class Article < ActiveRecord::Base
   has_many :subscribes, as: :subscribable
   has_many :users, through: :subscribes
 end
-```
+{% endhighlight %}
 
 
 #### 备注:

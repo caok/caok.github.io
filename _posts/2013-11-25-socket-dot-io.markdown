@@ -6,24 +6,24 @@ comments: true
 categories: [NodeJs]
 ---
 
-```javascript SERVER(app.js)
+{% highlight javascript %}
+# SERVER(app.js)
 var app = require('express').createServer()
   , io = require('socket.io').listen(app);
-
 app.listen(80);
-
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
-
 io.sockets.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {
     console.log(data);
   });
 });
-```
-```html CLIENT(index.html)
+{% endhighlight %}
+
+{% highlight html %}
+# CLIENT(index.html)
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io.connect('http://localhost');
@@ -33,15 +33,15 @@ io.sockets.on('connection', function (socket) {
     socket.emit('my other event', { my: 'data' });
   });
 </script>
-```
+{% endhighlight %}
+
 emit: 触发事件
 on: 监听事件
 
 broadcast: 广播(触发事件)
-```javascript
+{% highlight javascript %}
 socket.broadcast.emit('event_name', data)
-```
-<!-- more -->
+{% endhighlight %}
 
 socket.io本身的事件https://github.com/LearnBoost/socket.io/wiki/Exposed-events
 
@@ -51,7 +51,7 @@ io.sockets.on('connection', function (socket) {});
 当然还有中方式就是单独为这两个人开辟一个room，个人觉得这不是一个很好的办法.
 
 比如处理私聊的时候，我们可以这样:
-```javascript
+{% highlight javascript %}
 //在一开始(用户上线时)设定下client的name为私聊做准备(将上线的用户名存储为 socket 对象的属性，以区分每个 socket 对象)
 socket.name = "xxx";
 .....
@@ -65,44 +65,48 @@ clients.forEach(function (client) {
     client.emit('say', data);
   }
 });
-```
+{% endhighlight %}
 
 ### Room
 加入房间
-```javascript
+{% highlight javascript %}
 socket.join('room')
-```
+{% endhighlight %}
+
 离开房间
-```javascript
+{% highlight javascript %}
 socket.leave('room')
-```
+{% endhighlight %}
+
 对某个房间进行广播
-```javascript
+{% highlight javascript %}
 socket.broadcast.to('room')
 or
 io.sockets.in('room')
-```
+{% endhighlight %}
+
 例如:
-```javascript
+{% highlight javascript %}
 io.sockets.on('connection', function (socket) {
   socket.broadcast.to('room').emit('event_name', data) //emit to 'room' except this socket
 })
-```
+{% endhighlight %}
+
 某个房间的成员清单
-```javascript
+{% highlight javascript %}
 io.sockets.clients('room')
-```
+{% endhighlight %}
 
 房间：https://github.com/LearnBoost/socket.io/wiki/Rooms
 
 讲到room的话，还有个namespaces也可以提一下
 
 namespaces的用法:
-```javascript
+{% highlight javascript %}
 var chat = io
     .of('/chat/' + documentId)
     .on('connection', function (socket) {...}
-```
+{% endhighlight %}
 或许有人会有疑惑，room和namespaces有什么区别。我也不是很清楚，哈哈，从stackoverflow上引用一段别人的来解释下:
 
 #### This is what namespaces and rooms have in common (socket.io v0.9.8):

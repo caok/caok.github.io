@@ -26,8 +26,6 @@ ruby test/unittest.rb
 ```
 跑rake命令不带任何其他参数的时候，它会自动跑Rakefile文件中的default任务.
 
-<!-- more -->
-
 ### 2.Dependencies
 ```ruby Rakefile
 directory "tmp"

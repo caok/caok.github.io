@@ -10,27 +10,26 @@ categories: [Web]
 
 可以在[mediaqueri.es](http://mediaqueri.es/)查看到这类的例子。
 
-<!-- more -->
 
 这里介绍下在做自适应网页的时候需要注意的几个点:
 
 ### 1.viewport标签
 在网页代码的头部加入viewport标签,增加viewport meta标签告诉浏览器视口宽度等于设备屏幕宽度，且不进行初始缩放。
-```html
+{% highlight html %}
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-```
+{% endhighlight %}
 这行代码的意思是，网页宽度默认等于屏幕宽度（width=device-width），原始缩放比例（initial-scale=1）为1.0，即网页初始大小占屏幕面积的100%。主流的浏览器都支持这个设置，但ie6,7,8的话就要例外了。。
 
 但如果把 user-scalable=no 或者 maximum-scale=1 结合 initial-scale=1一起使用,这会禁用站点的缩放的功能。
 
 ### 2.不使用px
 在设定width时不要使用px来定义，这会使它的宽度是绝对的。这将不利于"自适应"。所以我们在定义宽度时要尽量使用百分比，或者auto;
-```
+{% highlight css %}
 width: 50%;
 width: auto;
-```
+{% endhighlight %}
 当然字的大小也是如此，使用em来取代px。
-```
+{% highlight css %}
 body {
   font: normal 100% Helvetica, Arial, sans-serif;
 }
@@ -38,7 +37,7 @@ body {
 h1 {
   font-size: 1.5em; 
 }
-```
+{% endhighlight %}
 这里面h1的字体大小就是默认body字体的1.5倍
 
 图片的处理也是如此:
@@ -49,23 +48,23 @@ css加载的background-image如何自适应大小呢，其实CSS3中是可以实
 
 ### 3.使用box-sizing: border-box
 在你的css文件的顶部增加:
-```
+{% highlight css %}
 *, *:before, *:after {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-```
+{% endhighlight %}
 区别在哪里呢？
 
 没使用box-sizing: border-box
-```
+{% highlight css %}
 margin, borders 和 padding 都在content的外部
-```
+{% endhighlight %}
 使用box-sizing: border-box
-```
+{% highlight css %}
 borders 和 padding 在content的内部，只有margin在content的外部
-```
+{% endhighlight %}
 这个主要也是用来解决ie这个特例的...
 
 ### 4.使用流动布局
@@ -75,17 +74,17 @@ float的好处是，如果宽度太小，放不下两个元素，后面的元素
 
 ### 5.选择加载css
 自动探测屏幕宽度，然后加载相应的CSS文件。
-```
+{% highlight html %}
 <link rel="stylesheet" type="text/css"
     media="screen and (max-device-width: 400px)"
 　　href="tinyScreen.css" />
-```
+{% endhighlight %}
 如果屏幕宽度小于400像素（max-device-width: 400px），就加载tinyScreen.css文件。
-```
+{% highlight html %}
 <link rel="stylesheet" type="text/css"
 　　media="screen and (min-width: 400px) and (max-device-width: 600px)"
 　　href="smallScreen.css" />
-```
+{% endhighlight %}
 如果屏幕宽度在400像素到600像素之间，则加载smallScreen.css文件。
 
 

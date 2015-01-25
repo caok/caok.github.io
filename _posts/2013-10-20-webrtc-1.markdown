@@ -14,24 +14,23 @@ WebRTC主要包括三个API接口:
 * RTCPeerConnection
 * RTCDataChannel
 
-<!-- more -->
-
 ### 1.getUserMedia
 getUserMedia主要用于获取本地的音频和视频流
-```javascript
+{% highlight javascript %}
 getUserMedia(streams, success, error);
 
 streams 选项对象，比如{audio:true, video:true}
 success 成功后的回调函数
 error   失败后的回调函数
-```
+{% endhighlight %}
 
 调用摄像头的实例
-```html
+{% highlight html %}
 <video id='localVideo' autoplay muted controls style="width: 320px; height: 240px; border: 1px solid black;">
 </video>
-```
-```javascript
+{% endhighlight %}
+
+{% highlight javascript %}
 //多浏览器支持
 navigator.getUserMedia || (navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia);
 
@@ -56,7 +55,8 @@ function onSuccess(stream) {
 function onError() {
   alert('There has been a problem retrieving the streams - did you allow access?');
 }
-```
+{% endhighlight %}
+
 这里只是调用摄像头，但在这个基础上能做许多应用，比如[拍照](http://www.creativebloq.com/javascript/get-started-webrtc-1132857), [ascii-camera](http://idevelop.ro/ascii-camera/), [Webcam Toy](http://webcamtoy.com)等。如果想做一个无声的监视功能，也可以参考下这篇博客[Pushing HTML5 Video content over ColdFusion WebSockets](http://www.sagarganatra.com/2012/04/pushing-html5-video-content-over.html)
 
 

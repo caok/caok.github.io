@@ -18,8 +18,6 @@ categories: [Webrtc]
 * Signaling Server :  转发端点信号创建连接,用来创建结点之间最初的连接,可以使用socket.io或websocket等
 * ICE Server       :  用于穿透([STUN](http://baike.baidu.com/link?url=9o6d67jEENjKpNfg9q2rlwEOMJg1XHhwJszVhDdJSH5bpciy8QbHnnEpn5kw_yfa), TURN)
 
-<!-- more -->
-
 ICE server可以采用公开的免费的STUN服务器, 而Signaling server我们可以使用socket.io简单搭建一个。
 
 或许有人会问“不是之前说webrtc不再需要服务器了吗？”， 实际上还是需要的，不过这里所需的服务器更多的是为了在最初的时候让结点之间建立通信。一旦建立通信之后，就不再需要服务器进行干涉。即此时你把上述两个服务器给关了，已建立连接的结点还是可以正常视频通信。

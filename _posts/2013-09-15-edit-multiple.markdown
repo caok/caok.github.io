@@ -10,7 +10,8 @@ railscast的[165 Edit Multiple (revised)](http://railscasts.com/episodes/165-edi
 
 ### 方法一(inline)
 允许你一次选中多个product，然后每个被选中的product都会被设置成"discontinued"。
-```html products/index.html
+{% highlight ruby %}
+# products/index.html
 <%= form_tag discontinue_products_path, method: :put do %>
   <table>
     <tr>                         
@@ -26,23 +27,24 @@ railscast的[165 Edit Multiple (revised)](http://railscasts.com/episodes/165-edi
   </table>
   <%= submit_tag "discountinue checked", data: { disable_with: "Please wait..." } %>
 <% end %>
-```
-<!-- more -->
+{% endhighlight %}
 
-```ruby routes.rb
+{% highlight ruby %}
+# routes.rb
 resources :products do
   collection do
     put :discontinue
   end
 end
-```
+{% endhighlight %}
 
-```ruby products_controller.rb
+{% highlight ruby %}
+# products_controller.rb
 def discontinue
   Product.update_all({discontinued: true}, {id: params[:product_ids]})
   redirect_to products_url
 end
-```
+{% endhighlight %}
 
 #### 补充
 form_tag的写法，不同于form_for没有将属性与model绑定起来，而是直接写属性名。每个helper方法都有两个参数，一个是域的名字，另一个是域的值。
@@ -54,20 +56,23 @@ submit_tag中的:disable_with选项的作用是:在button被点击之后把它di
 创建一个复选框表单
 
 check_box_tag(name, value = "1", checked = false, options = {})
-```ruby  示例
+{% highlight ruby %}
+# 示例
 check_box_tag 'eula', 'accepted', false, disabled: true
 # => <input disabled="disabled" id="eula" name="eula" type="checkbox" value="accepted" />
-```
+{% endhighlight %}
+
 check_box_tag的name，它是以一个方括号结尾的，这是所有传上去的值将会被集合成一个数组。
-```
+{% highlight ruby %}
 <%= check_box_tag "product_ids[]", product.id %>
 等同于页面上的效果
 <input id="product_ids_" name="product_ids[]" type="checkbox" value="1">
-```
+{% endhighlight %}
 
 ### 方法二(individually)
 让用户选择更新一批记录的多个属性，而不是之前的单个属性.首先利用checkbox选择要修改的product,我们先把显示所有product的table标签用form包起来,如果我们没有为form指定提交方式，所以它默认是POST，但是我们需要通过这个form进入到一个显示所有选中的product的页面,所以我们需要用的应该是GET
-```html products/index.html
+{% highlight ruby %}
+# products/index.html
 <%= form_tag edit_multiple_products_path, method: :get do %>
   <table>
     <tr>                         
@@ -83,17 +88,20 @@ check_box_tag的name，它是以一个方括号结尾的，这是所有传上去
   </table>
   <%= submit_tag "edit checked" %>
 <% end %>
-```
+{% endhighlight %}
 
-```ruby routes.rb
+{% highlight ruby %}
+# routes.rb
 resources :products do
   collection do
     get :edit_multiple
     put :update_multiple
   end
 end
-```
-```html products/edit_multiple.html.erb
+{% endhighlight %}
+
+{% highlight ruby %}
+# products/edit_multiple.html.erb
 <h1>Edit Checked Products</h1>
 <%= form_tag update_multiple_products_path, method: :put do %>
   <% @products.each do |product| %>
@@ -131,9 +139,10 @@ end
     <%= submit_tag "update" %>
   </div>
 <% end %>
-```
+{% endhighlight %}
 
-```ruby products_controller.rb
+{% highlight ruby %}
+# products_controller.rb
 def edit_multiple
   @products = Product.find(params[:product_ids])
 end
@@ -142,9 +151,11 @@ def update_multiple
   Product.update(params[:products].keys, params[:products].values)
   redirect_to products_url
 end
-```
+{% endhighlight %}
+
 增加对字段限制的处理判断
-```ruby products_controller.rb
+{% highlight ruby %}
+# products_controller.rb
 def update_multiple
   @products = Product.update(params[:products].keys, params[:products].values)
   @products.reject! { |p| p.errors.empty? }
@@ -154,10 +165,11 @@ def update_multiple
     render "edit_multiple"
   end 
 end 
-```
+{% endhighlight %}
 
 ### 方法三(single-fieldset)
-```html products/edit_multiple.html.erb
+{% highlight ruby %}
+# products/edit_multiple.html.erb
 <h1>Edit Checked Products</h1>
            
 <%= form_tag update_multiple_products_path, method: :put do %>
@@ -196,9 +208,10 @@ end
     <%= submit_tag "update" %>
   </div>
 <% end %>
-```
+{% endhighlight %}
 
-```ruby products_controller.rb
+{% highlight ruby %}
+# products_controller.rb
 def update_multiple
   @products = Product.find(params[:product_ids])
   @products.reject! do |product|
@@ -211,7 +224,7 @@ def update_multiple
     render "edit_multiple"
   end 
 end 
-```
+{% endhighlight %}
 
 ### 参考:
 * http://railscasts.com/episodes/165-edit-multiple-revised

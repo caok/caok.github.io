@@ -19,15 +19,13 @@ categories: [NodeJs]
 * 提供 HTTP API
 * 远程控制和实时的接口API ( Nodejs 模块,允许和PM2进程管理器交互 )
 
-<!-- more -->
-
 ### 安装
-```
+{% highlight bash %}
 npm install pm2@latest -g
-```
+{% endhighlight %}
 
 ### 用法
-```
+{% highlight bash %}
 $ pm2 start app.js -i 4           # 后台运行pm2，启动4个app.js 
                                   # 也可以把'max' 参数传递给 start
                                   # 正确的进程数目依赖于cpu的核心数目
@@ -52,7 +50,7 @@ $ pm2 startup ubuntu              # 产生 init 脚本 保持进程活着
 $ pm2 web                         # 运行健壮的 computer API endpoint (http://localhost:9615)
 $ pm2 dump                        # 备份当前被 pm2 管理的进程
 $ pm2 resurrect                   # 存储备份
-```
+{% endhighlight %}
 
 当然我们也可以试试 [forever](https://github.com/nodejitsu/forever) 和 [cluster](https://github.com/LearnBoost/cluster)
 
