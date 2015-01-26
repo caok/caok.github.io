@@ -14,29 +14,30 @@ download from [http://downloads.vagrantup.com](http://downloads.vagrantup.com/)
 <!-- more -->
 
 ### 2.一个简单的项目
-```sh
+{% highlight bash %}
 vagrant box add precise32 http://files.vagrantup.com/precise32.box
 
 rails new demo && cd demo
 vagrant init precise32   # this will create the file of Vagrantfile
 vagrant up #启动
 vagrant ssh #登录
-```
+{% endhighlight %}
 
 ### 3.安装应用环境
 
 ### 4.修改外部访问端口
-```sh  Vagrantfile
+{% highlight bash %}
+# Vagrantfile
 config.vm.forward_port "rails", 3000, 3000
-```
+{% endhighlight %}
 
 ### 5.重新加载vagrant的配置文件
-```sh
+{% highlight bash %}
 vagrant reload
-```
+{% endhighlight %}
 
 ### 6.vagrant 命令
-```sh
+{% highlight bash %}
 vagrant ssh      # 通过ssh登录
 vagrant status   # 查看当前状态
 
@@ -48,7 +49,7 @@ vagrant up       # 启动
 
 vagrant packge   # 将其打包
 vagrant destroy  # 删除
-```
+{% endhighlight %}
 
 #### 参考:
 * http://www.vagrantup.com

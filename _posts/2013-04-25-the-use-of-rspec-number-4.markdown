@@ -14,9 +14,8 @@ categories: [Rails, Rspec, Test]
 
 现在介绍下rspec在rails的controller中一些常见的测试例子
 
-<!-- more -->
 事先的准备(这里假定对user的firstname做了限定，不允许为空)：
-```ruby
+{% highlight ruby %}
 FactoryGirl.define do
   factory :user do
     sequence(:firstname) { |n| "user#{n}" }
@@ -27,9 +26,10 @@ FactoryGirl.define do
     end 
   end
 end
-```
+{% endhighlight %}
+
 ### 1.Testing GET methods
-```ruby
+{% highlight ruby %}
 let(:user) { create :user }
 
 describe "GET #index" do
@@ -56,13 +56,14 @@ describe "GET #show" do
     response.should render_template :show
   end
 end
-```
+{% endhighlight %}
+
 attributes_for:用来生成一个包含了指定对象的值的hash
 
 id: user 等同与 id: user.id
 
 ### 2.Testing POST methods
-```ruby
+{% highlight ruby %}
 describe "POST create" do
   context "with valid attributes" do
     let(:valid_attributes) { attributes_for(:user) }
@@ -92,10 +93,10 @@ describe "POST create" do
     end
   end 
 end
-```
+{% endhighlight %}
 
 ### 3.Testing PUT methods
-```ruby
+{% highlight ruby %}
 describe 'PUT update' do
   let(:user) { create :user, firstname: "Lawrence", lastname: "Smith" }
   
@@ -143,10 +144,10 @@ describe 'PUT update' do
     end
   end
 end
-```
+{% endhighlight %}
 
 ### 4.Testing DELETE methods
-```ruby
+{% highlight ruby %}
 describe 'DELETE destroy' do
   let(:user) { create :user }
 
@@ -161,7 +162,7 @@ describe 'DELETE destroy' do
     response.should redirect_to users_url
   end
 end
-```
+{% endhighlight %}
 
 #### 参考：
 * http://rubydoc.info/gems/rspec-rails/frames

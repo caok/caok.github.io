@@ -10,20 +10,20 @@ categories: [NodeJs, Extjs]
 
 ### 1.新建express项目
 首先我们新建一个express的项目，可以参照[Web Development With Express](http://caok1231.com/blog/2013/05/19/web-development-with-express/)。
-```sh
+{% highlight bash %}
 express -e extjs-demo
 cd extjs-demo
 sudo npm install
-```
-增加数据库支持
-```sh
-sudo npm install mysql
-```
+{% endhighlight %}
 
-<!-- more -->
+增加数据库支持
+{% highlight bash %}
+sudo npm install mysql
+{% endhighlight %}
 
 连接数据库
-```javascript models/db.js
+{% highlight javascript %}
+# models/db.js
 var mysql = require('mysql');
  
 var connection = mysql.createConnection({
@@ -36,8 +36,10 @@ var connection = mysql.createConnection({
  
 connection.connect();
 module.exports = connection;
-```
-```javascript modules/article.js
+{% endhighlight %}
+
+{% highlight javascript %}
+# modules/article.js
 var mysql = require('./db');
  
 Article.get = function get(query, callback){
@@ -50,7 +52,8 @@ Article.get = function get(query, callback){
     callback(err, rows);
   }); 
 };
-```
+{% endhighlight %}
+
 这里只稍微提下，具体可参见[extjs-demo](https://github.com/caok/extjs-demo)。
 
 
@@ -61,7 +64,8 @@ Article.get = function get(query, callback){
 * ext-lang-zh_CN.js  extjs的中文化部件(选用)
 
 修改我们的主页，加载extjs
-```html views/index.ejs
+{% highlight html %}
+# views/index.ejs
 <head>
   <link rel="stylesheet" type="text/css" href="/javascripts/extjs/resources/css/ext-all.css" />
   <script type="text/javascript" src="/javascripts/extjs/ext-all.js"></script>
@@ -73,8 +77,10 @@ Article.get = function get(query, callback){
   </script>
   <script type="text/javascript" src="/javascripts/app.js"> </script>
 </head>
-```
-```javascript public/javascripts/app.js
+{% endhighlight %}
+
+{% highlight javascript %}
+# public/javascripts/app.js
 Ext.application({
   name: "demo",
   appFolder: "/javascripts/app",  
@@ -89,20 +95,24 @@ Ext.application({
     });
   }
 });
-```
+{% endhighlight %}
+
 这样启动之后就能看到extjs的界面了，当然加载的extjs可能有些多，如果有经验的同学可以指点下，还有哪些东西也可以将其去掉(刚接触，要是犯了比较白的错误，希望能指出，也好学习下，哈哈)。
 
 ### 3.extjs的mvc
 参照extjs官方的说明，文件结构如下定义
-```
+
+{% highlight bash %}
 --app
   --controller
   --model
   --store
   --view
-```
+{% endhighlight %}
+
 加入controller和view
-```javascript public/javascripts/app.js
+{% highlight javascript %}
+# public/javascripts/app.js
 Ext.application({
   name: "demo",
   appFolder: "/javascripts/app",  
@@ -121,9 +131,11 @@ Ext.application({
     });
   }
 });
-```
+{% endhighlight %}
+
 这里通过controllers: ['Articles']调用对应的controller
-```javascript public/javascripts/app/controller/Articles.js
+{% highlight javascript %}
+# public/javascripts/app/controller/Articles.js
 Ext.define("Demo.controller.Articles", {
   extend: 'Ext.app.Controller',
 
@@ -141,8 +153,10 @@ Ext.define("Demo.controller.Articles", {
     console.log("articles editor was rendered");
   }  
 });
-```
-```javascript public/javascripts/app/view/Articles.js
+{% endhighlight %}
+
+{% highlight javascript %}
+# public/javascripts/app/view/Articles.js
 Ext.define('Demo.view.Articles', {
   extend: 'Ext.grid.Panel',
   id: "articles_editor",
@@ -163,18 +177,22 @@ Ext.define('Demo.view.Articles', {
     this.callParent(arguments);
   }
 });
-```
+{% endhighlight %}
+
 这里先放点假数据呈现下，至此你打开界面的时候就能看到相应的数据显示在页面上
 
 数据放在页面上肯定是不合理的，一般model中定义数据的结构，store存取数据记录
 
 在controller中新增
-```javascript public/javascripts/app/controller/Articles.js
+{% highlight javascript %}
+# public/javascripts/app/controller/Articles.js
 models: ['Articles'],
 stores: ['Articles'],
-```
+{% endhighlight %}
+
 view中修改为
-```javascript public/javascripts/app/view/Articles.js
+{% highlight javascript %}
+# public/javascripts/app/view/Articles.js
 Ext.define('Demo.view.Articles', {
   extend: 'Ext.grid.Panel',
   id: "articles_editor",
@@ -204,9 +222,11 @@ Ext.define('Demo.view.Articles', {
     this.callParent(arguments);
   }
 });
-```
+{% endhighlight %}
+
 model中定义数据类型
-```javascript public/javascripts/app/model/Articles.js
+{% highlight javascript %}
+# public/javascripts/app/model/Articles.js
 Ext.define('Demo.model.Articles', {
   extend: 'Ext.data.Model',
   fields: [
@@ -227,9 +247,11 @@ Ext.define('Demo.model.Articles', {
       type: 'string'
     }]
 });
-```
+{% endhighlight %}
+
 store中存取数据记录
-```javascript public/javascripts/app/model/Articles.js
+{% highlight javascript %}
+# public/javascripts/app/model/Articles.js
 Ext.define('Demo.store.Articles', {
   extend: 'Ext.data.Store',
   model: 'Demo.model.Articles',
@@ -242,12 +264,14 @@ Ext.define('Demo.store.Articles', {
     happened_at: '2013-6-1'
   }]
 });
-```
+{% endhighlight %}
+
 当然至此为止我们还没进行数据交互的部分，那接下来我们就试试跟后台的交互
 
 ### 4.数据交互
 在服务器段做下相应的json数据的准备
-```javascript routes/index.js
+{% highlight javascript %}
+# routes/index.js
 var Article = require('../models/article.js');
  
 module.exports = function (app) {
@@ -261,9 +285,11 @@ module.exports = function (app) {
     });
   });
 }
-```
+{% endhighlight %}
+
 通过proxy从服务器端的"/articles"中获取json数据
-```javascript public/javascripts/app/model/Articles.js
+{% highlight javascript %}
+# public/javascripts/app/model/Articles.js
 Ext.define('Demo.store.Articles', {
   extend: 'Ext.data.Store',
 
@@ -280,7 +306,8 @@ Ext.define('Demo.store.Articles', {
     }
   }
 });
-```
+{% endhighlight %}
+
 这样就能在网页上显示数据库中的数据.
 
 这里的代码可以参考[https://github.com/caok/extjs-demo](https://github.com/caok/extjs-demo)

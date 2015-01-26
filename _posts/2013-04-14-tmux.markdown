@@ -7,7 +7,6 @@ categories: [Ubuntu, Tmux]
 ---
 
 最近经常听说[tmux](http://baike.baidu.com/view/9065064.htm)的大名，但一直都没好好的试试。今天看了[happycasts](http://happycasts.net/episodes/41)和[impressive-ruby-productivity-with-vim-and-tmux](http://confreaks.com/videos/2291-larubyconf2013-impressive-ruby-productivity-with-vim-and-tmux),才知道这么晚使用是个多么不明智的选择。
-<!-- more -->
 
 ### 1.安装
     sudo apt-get install tmux
@@ -36,7 +35,7 @@ tmux命令都具有一个前缀命令(PREFIX)，默认的是Ctrl+b，可以自�
     tmux kill-server             # 关闭所有会话
 
 ### 3.常见的快捷键用法
-```sh
+{% highlight bash %}
 Ctrl-b d          # 隐藏，临时断开会话
 Ctrl-b c          # 新开一个窗口
 Ctrl-b &          # 退出当前窗口
@@ -61,26 +60,27 @@ Ctrl-b Ctrl-方向键 # 调整分隔窗口大小
 
 Ctrl-b ?          # 显示快捷键帮助
 Ctrl-b t          # 显示时钟
-```
+{% endhighlight %}
 
 ### 4.拷贝
     Ctrl-b [         # 进入拷贝模式
     Ctrl-b ]         # 粘帖
 
 具体过程
-```
+{% highlight bash %}
 a.Ctrl-b [ 进入复制模式 
 b.按 space 开始复制，移动光标选择复制区域 
 c.按 Enter 复制并退出拷贝模式
 d.将光标移动到指定位置，按 Ctrl-b ] 粘贴 
-```
+{% endhighlight %}
+
 如果不在配置文件中进行如下配置，在VIM中复制模式无法完成操作.
 
 在~/.tmux.conf中加入如下 
     setw -g mode-keys vi
 
 ### 5.配置
-```
+{% highlight bash %}
 #设置PREFIX为Ctrl-a  
 set -g prefix C-a
 #解除Ctrl-b与PREFIX的对应关系  
@@ -145,7 +145,7 @@ set -g status-justify centre
 #开启window事件提示  
 setw -g monitor-activity on  
 set -g visual-activity on  
-```
+{% endhighlight %}
 
 #### 参考：
 * http://happycasts.net/episodes/41

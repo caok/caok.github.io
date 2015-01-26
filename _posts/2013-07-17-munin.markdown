@@ -11,28 +11,27 @@ categories: [Ubuntu]
 live demo : [http://munin.ping.uio.no](http://munin.ping.uio.no)
 
 ### 1.安装
-```sh
+{% highlight bash %}
 # Munin master(服务器端)
 apt-get install munin  
   
 # Munin node(客户端)
 apt-get install munin-node  
-```
-
-<!-- more -->
+{% endhighlight %}
 
 munin主要文件
-```
+{% highlight bash %}
 - /etc/munin 配置文件
 - /etc/munin/munin.conf 主服务配置文件
 - /etc/munin/munin-node.conf 节点配置文件
 - /etc/munin/plugins 插件存放
 - /var/lib/munin 统计数据文件
 - /var/cache/munin/www Htmldir 输出文件
-```
+{% endhighlight %}
 
 ### 2.配置master
-```sh /etc/munin.conf
+{% highlight bash %}
+# /etc/munin.conf
 # Configfile for Munin master  
 dbdir       /var/lib/munin
 htmldir     /var/www/munin
@@ -60,10 +59,11 @@ contact.nagios.command /usr/local/nagios/bin/send_nsca nagioshost.example.com -c
 [Groupname;baz.example.com]   # Associates the host baz.example.com to this group
   address baz.example.com     # The address of the host, where munin-node is running.
   update no                   # Specifies that no services on this host should be updated by munin-update
-```
+{% endhighlight %}
 
 ### 3.配置node
-```sh /etc/munin-node.conf
+{% highlight bash %}
+# /etc/munin-node.conf
 log_level 4
 log_file /var/log/munin/munin-node.log
 port 4949
@@ -83,15 +83,17 @@ allow ^127\.0\.0\.1$           #设置哪些主机可以访问
 allow ^192\.168\.10\.3$
 cidr_allow 10.20.30.0/16
 cidr_deny 10.10.30.12/24
-```
+{% endhighlight %}
 
 ### 4.配置网页监控
 需要一个 web servie 帮忙, 安装 apache
-```sh
+{% highlight bash %}
 sudo apt-get install apache2
-```
+{% endhighlight %}
+
 apache配置
-```sh /etc/apache2/sites-available/default
+{% highlight bash %}
+# /etc/apache2/sites-available/default
 <VirtualHost *:80>
   ServerAdmin webmaster@localhost
   ServerName   munin.example.com
@@ -107,29 +109,31 @@ apache配置
   ErrorLog /var/log/apache2/munin.error.log
   ServerSignature On
 </VirtualHost>
-```
+{% endhighlight %}
 或者用nginx，将nginx设置一下root，指定到/var/www/html/munin下面就行了
 
 ### 5.常用命令
-```sh
+{% highlight bash %}
 munin-cron #定时任务
 munin-run  #执行plugins
 munin-node-configure --shell #查看有哪些plugins
-```
+{% endhighlight %}
 
 ### 6.实例
 #### 需要监控的服务器
-```
+{% highlight bash %}
 主服务器 192.168.1.1
 客户端：
 mysql服务器 192.168.1.2
 web服务器 192.168.1.3
 文件服务器 192.168.1.4
-```
+{% endhighlight %}
+
 #### 在对应的服务器上安装munin(服务器)和munin-node(客户端)
 
 #### munin服务器(192.168.1.1)端配置
-```sh /etc/munin/munin.conf
+{% highlight bash %}
+# /etc/munin/munin.conf
 //找到以下内容把前面的注释去掉
 #dbdir  /var/lib/munin
 #htmldir /var/www/html/munin
@@ -150,17 +154,20 @@ web服务器 192.168.1.3
 [files]
     address 192.168.1.4
     use_node_name yes
-```
+{% endhighlight %}
+
 #### munin客户(192.168.1.2,192.168.1.3,192.168.1.4)端配置
-```sh /etc/munin/munin-node.conf
+{% highlight bash %}
+# /etc/munin/munin-node.conf
 //在allow ^127\.0\.0\.1$下面在加上一行
 allow ^192\.168\.1\.1$
-```
+{% endhighlight %}
+
 #### 启动munin
-```sh
+{% highlight bash %}
 sudo /etc/init.d/munin start        #服务器
 sudo /etc/init.d/munin-node start   #客户端
-```
+{% endhighlight %}
 
 ### 参考
 * http://munin-monitoring.org/wiki/LinuxInstallation

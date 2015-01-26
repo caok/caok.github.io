@@ -9,44 +9,50 @@ categories: [Ruby]
 在rails中经常会看到[rake](https://github.com/jimweirich/rake)完成的多种自动化的任务，现在就简单介绍下如何从头写一个Rakefile。
 
 ### 1.简单的示例(Default Task)
-```ruby Rakefile
+{% highlight ruby %}
+# Rakefile
 task :default => [:test]
 
 task :test do
   ruby "test/unittest.rb"
 end
-```
-```sh
+{% endhighlight %}
+
+{% highlight bash %}
 % ls
 Rakefile     test/
 % rake
 (in /home/some_user/Projects/rake)
 ruby test/unittest.rb
 ....unit test output here...
-```
+{% endhighlight %}
+
 跑rake命令不带任何其他参数的时候，它会自动跑Rakefile文件中的default任务.
 
 ### 2.Dependencies
-```ruby Rakefile
+{% highlight ruby %}
+# Rakefile
 directory "tmp"
 
 file "tmp/hello.tmp" => "tmp" do
   sh "echo 'Hello' > 'tmp/hello.tmp'"
 end
-```
+{% endhighlight %}
+
 "tmp/hello.tmp"依赖于 directory "tmp"。当rake运行到directory "tmp"时，它会在运行"tmp/hello.tmp"这个task之前去创建一个tmp的目录。如果这里我们把task直接定义为"hello.tmp"的话，rake会直接在当前目录下找hello.tmp这个文件，会导致找不到。
 
 但task定义为"tmp/hello.tmp"之后，rake就能知道这个file task是否已经执行过了。
-```sh
+{% highlight ruby %}
 $ rake "tmp/hello.tmp"
 mkdir -p tmp
 echo 'Hello' > 'tmp/hello.tmp'
 
 $ rake "tmp/hello.tmp"
-```
+{% endhighlight %}
 
 ### 3.Running Other Tasks
-```ruby Rakefile
+{% highlight ruby %}
+# Rakefile
 task :turn_off_alarm do
   puts "Turned off alarm. Would have liked 5 more minutes, though."
 end
@@ -59,9 +65,10 @@ end
 task :ready_for_the_day => [:turn_off_alarm, :make_coffee] do
   puts "Ready for the day!"
 end
-```
+{% endhighlight %}
+
 这个里面的"=>"相当于加入了依赖关系，执行ready_for_the_day之前会先执行turn_off_alarm和make_coffee
-```sh
+{% highlight bash %}
 $ rake ready_for_the_day
 Turned off alarm. Would have liked 5 more minutes, though.
 Made 5 cups of coffee. Shakes are gone.
@@ -69,11 +76,12 @@ Ready for the day!
 
 $ rake COFFEE_CUPS=5 make_coffee
 Made 5 cups of coffee. Shakes are gone.
-```
+{% endhighlight %}
 
 ### 4.Describing Your Tasks And Namespaces
 当然你也可以加上你对任务的藐视，以及加上一定的命名空间
-```ruby Rakefile
+{% highlight ruby %}
+# Rakefile
 namespace :morning do
   task :turn_off_alarm do
     puts "Turned off alarm. Would have liked 5 more minutes, though."
@@ -89,34 +97,37 @@ end
 task :ready_for_the_day => [:turn_off_alarm, :make_coffee] do
   puts "Ready for the day!"
 end
-```
-```sh
+{% endhighlight %}
+
+{% highlight bash %}
 $ rake -T 或者 rake --tasks
 rake morning:turn_off_alarm
 rake make_coffee        # Make coffee
 rake ready_for_the_day
-```
+{% endhighlight %}
+
 玩过rails的是不是特别熟悉，哈哈，这个就和rake db:migrate是一个道理
 
 ### 5.调用task
 有时候会有这种情况：在一个task中调用之前已定义过的task
-```ruby
+{% highlight ruby %}
 namespace :afternoon do
   task :make_coffee do
     Rake::Task['morning:make_coffee'].invoke
     puts "Ready for the rest of the day!"
   end
 end
-```
+{% endhighlight %}
 
 ### 6.[如何实现类似 Rails Console 的东西](http://huacnlee.com/blog/how-to-create-your-owner-rails-console/)
 Rails 提供了一个 rails console，可以让我们很方便的在 启动 Web Server 之外直接调用代码、调用 Model 查询/修改数据等。
-```sh
+{% highlight bash %}
 ➜  ruby-china git:(master) rails c
 Loading development environment (Rails 4.0.0)
 irb(main):001:0> @post = Post.last
 irb(main):001:0> @post.update_attribute(:title, "Foo bar")
-```
+{% endhighlight %}
+
 如何实现这个东西
 
 Ruby 标准库里面带有一个叫 IRB 的库，实际上，你现在就可以直接执行 irb 进入 Ruby 的控制台，在里面可以进行任何 Ruby 的代码执行。
@@ -126,13 +137,15 @@ Ruby 标准库里面带有一个叫 IRB 的库，实际上，你现在就可以�
 来一个最简单的例子
 
 创建下面这些文件：
-```
+{% highlight ruby %}
 foo
   Rakefile
   post.rb
-```
+{% endhighlight %}
+
 post.rb 来点简单的代码：
-```ruby  post.rb
+{% highlight ruby %}
+# post.rb
 class Post
   attr_accessor :title
 
@@ -140,9 +153,10 @@ class Post
     [self.title,a].join(" = ")
   end
 end
-```
+{% endhighlight %}
 
-```ruby  Rakefile
+{% highlight ruby %}
+# Rakefile
 desc "Run Console"
 task :console do |t, args|
   env = ENV['APP_ENV'] || 'development'
@@ -154,9 +168,10 @@ task :console do |t, args|
   ARGV.clear
   IRB.start
 end
-```
+{% endhighlight %}
+
 现在就可以执行 rake console 进入你构建的 App 控制台了：
-```sh
+{% highlight bash %}
 $ rake console
 Loading development environment
 irb(main):001:0> @post = Post.new
@@ -165,7 +180,7 @@ irb(main):002:0> @post.title = "aabbcc"
 => "aabbcc"
 irb(main):004:0> @post.test("ccddee")
 => "aabbcc = ccddee"
-```
+{% endhighlight %}
 
 #### 备注
 以上是一些汇总，主要参考了Jason Seifer的[Rake Tutorial](http://jasonseifer.com/2010/04/06/rake-tutorial#rails_models) 和 李华顺的[如何实现类似 Rails Console 的东西](http://huacnlee.com/blog/how-to-create-your-owner-rails-console/)

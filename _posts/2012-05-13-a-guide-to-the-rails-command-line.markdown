@@ -15,8 +15,6 @@ With just three commands we whipped up a Rails server listening on port 3000
     cd commandsapp
     rails server(rails s)
 
-<!-- more -->
-
 > rails server -e production -p 4000
 
 > rails server --help

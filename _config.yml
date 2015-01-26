@@ -2,11 +2,9 @@
 title: Caok
 email: caok1231@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  Caok's personal website published personal blog articles and study notes.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://www.caok1231.com" # the base hostname & protocol for your site
+url: "http://caok1231.com" # the base hostname & protocol for your site
 twitter_username: caok1231
 github_username:  caok
 

@@ -11,8 +11,6 @@ categories: [Rails]
 * 2.Used in create and update flows
 * 3.Quack like Active Records
 
-<!-- more -->
-
 ### Implications
 * 1.Layer aggregation onto individual objects
 * 2.Limit responsibility of ActiveRecords
@@ -34,11 +32,12 @@ categories: [Rails]
 
 ### [416-form-object](http://railscasts.com/episodes/416-form-objects)中的疑问
 #### 1.persisted? vs new_record? any relation?
-```ruby
+{% highlight ruby %}
 def persisted?
   !(new_record? || destoryed?)
 end
-```
+{% endhighlight %}
+
 persisted?只有在新建或是删除时才为false
 
 #### 2.Why we don't need changing_password as attributes?

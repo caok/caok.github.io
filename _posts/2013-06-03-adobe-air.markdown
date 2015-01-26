@@ -13,10 +13,9 @@ categories: [Web]
 
 ### 2.使用
 项目主要包括三部分1.hello-app.xml, 2.hello.html, 3.AIRAliases.js(AIR SDK的frameworks文件夹中可以找到)
-<!-- more -->
 
 #### (1)创建air应用的描述文件hello-app.xml
-```xml
+{% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?> 
 <application xmlns="http://ns.adobe.com/air/application/2.7"> 
   <id>examples.html.HelloWorld</id> 
@@ -29,10 +28,10 @@ categories: [Web]
     <height>200</height> 
   </initialWindow> 
 </application>
-```
+{% endhighlight %}
 
 #### (2)创建应用的html页面hello.html
-```html
+{% highlight html %}
 <html>
   <head>
     <title>Hello World</title>
@@ -48,28 +47,30 @@ categories: [Web]
     <h1>Hello World</h1>
   </body>
 </html>
-```
+{% endhighlight %}
 
 #### (3)运行，查看效果
-```sh
+{% highlight bash %}
 adl hello-app.xml
-```
+{% endhighlight %}
 
 #### (4)打包
 生成一个自签名的证书和密钥对
-```sh
+{% highlight bash %}
 adt -certificate -cn SelfSigned 1024-RSA sampleCert.pfx samplePassword
-```
+{% endhighlight %}
+
 以下示例创建 EXE 文件（Windows 的本机安装程序文件）：
-```sh
+{% highlight bash %}
 adt -package -storetype pkcs12 -keystore sampleCert.pfx -target native myApp.exe hello-app.xml hello.html resources
-```
+{% endhighlight %}
 
 以下示例基于 AIR 文件创建 EXE 文件（Windows 的本机安装程序文件）
-```sh
+{% highlight bash %}
 adt -package -storetype pkcs12 -keystore sampleCert.pfx myApp.air hello-app.xml hello.html AIRAliases.js
 adt -package -target native myApp.exe myApp.air
-```
+{% endhighlight %}
+
 
 #### 参考:
 * http://help.adobe.com/en_US/air/build/WS5b3ccc516d4fbf351e63e3d118666ade46-7ecc.html

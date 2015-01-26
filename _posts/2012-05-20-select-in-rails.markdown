@@ -17,7 +17,6 @@ categories: [Rails, Select, Web]
   = f.select :recycled_eq, Item::RECYCLED_TYPES.map {|k, v| [v, k]}, :include_blank => true
   = f.submit
 ```
-<!-- more -->
 
 ```
 # _form.html.haml
