@@ -7,7 +7,6 @@ categories: [Nginx]
 ---
 
 之前介绍了nginx的安装和简单使用，有必要简单总结下nginx在配置文件的含义。
-<!-- more -->
 
 #### 管理配置文件
 Ubuntu安装之后的文件结构大致为：
@@ -23,7 +22,7 @@ Ubuntu安装之后的文件结构大致为：
 修改配置文件后通过重启nginx生效。
 
 #### 全局配置(nginx.conf)
-```
+{% highlight bash %}
 # 工作的子进程数量(通常设置成和CPU数量相等)
 worker_processes 1;
 
@@ -35,8 +34,9 @@ pid /tmp/nginx.pid;
 
 # 全局错误日志存放路径
 error_log /tmp/nginx.error.log;
-```
-```
+{% endhighlight %}
+
+{% highlight bash %}
 # 工作模式及连接数上限
 events {
   # 允许最大连接数(单个后台worker_process进程的最大并发链接数)
@@ -47,8 +47,9 @@ events {
 
   accept_mutex off; # "on" if nginx worker_processes > 1
 } 
-```
-```
+{% endhighlight %}
+
+{% highlight bash %}
 # 设定http服务器，利用它的反向代理功能提供负载均衡支持
 http {
   # nginx 在构建的时候将会在配置路径中查找该文件
@@ -129,7 +130,7 @@ http {
     }
   }
 }
-```
+{% endhighlight %}
 
 #### 参考：
 * http://nginx.org/en/

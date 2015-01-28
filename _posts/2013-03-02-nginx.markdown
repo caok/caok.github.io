@@ -7,7 +7,6 @@ categories: [Nginx]
 ---
 
 Nginx 是一个高性能的 HTTP 和 反向代理 服务器，也是最流行的web服务器之一。最近我尝试了下，记录下它最简单的使用。
-<!-- more -->
 
 #### 安装
     sudo apt-get install nginx
@@ -24,7 +23,8 @@ Nginx 是一个高性能的 HTTP 和 反向代理 服务器，也是最流行的
     default -->  /etc/nginx/sites-available/default
 
 你可以设置属于自己的nginx配置文件
-```sh  /etc/nginx/sites-available/rails_nginx.conf
+{% highlight bash %}
+# /etc/nginx/sites-available/rails_nginx.conf
 server {
   listen 80 default;
   server_name example.com;
@@ -47,7 +47,7 @@ server {
     root /u/app/example_app/current/public;
   }
 }
-```
+{% endhighlight %}
 这里原先用unicorn启动了应用，放在了9000端口上，并且用nginx去调用它。
 
 写好自己的配置文件后，就需要让nginx去调用该配置。

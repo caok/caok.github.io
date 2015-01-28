@@ -9,17 +9,18 @@ categories: [Rails, Vmc]
 [Cloud Foundry](http://baike.baidu.com/view/8193015.htm)是VMware于2011年4月12日推出的业界第一个开源PaaS云平台，它支持多种框架、语言、运行时环境、云平台及应用服务，使开发人员能够在几秒钟内进行应用程序的部署和扩展，无需担心任何基础架构的问题。
 
 我去年刚听说Cloud Foundry的时候就试用了下，隔了有些日子了，今天重新去使用的时候遇到了一些问题，记录下。
-<!-- more -->
 
 vmc需事先安装好了ruby
 ### 1.安装vmc
-```sh
+{% highlight bash %}
 gem install vmc
-```
+{% endhighlight %}
+
 如果刚安装后出现"command not found: vmc"的情况
-```sh
+{% highlight bash %}
 rbenv rehash
-```
+{% endhighlight %}
+
 我这使用的是rbenv
 
 ### 2.与Cloud Foundry建立连接
@@ -27,14 +28,16 @@ rbenv rehash
 
 ### 3.登录cloud foundry
 当然你已经注册好了Cloud Foundry的帐号，如果没有的话赶紧去[Cloud Foundry](http://my.cloudfoundry.com/signup)去注册一个
-```
+{% highlight bash %}
 vmc login
-```
+{% endhighlight %}
+
 登录成功后就可以开始部署了.
 
 ### 4.部署rails应用
 cloudfoundry上不支持sqlite3，如果你使用的还是sqlite3的话，可以在Gemfile这么修改下
-```ruby Gemfile
+{% highlight ruby %}
+# Gemfile
 # If you use a different database in development, hide it from Cloud Foundry.
 group :development do
   gem 'sqlite3'
@@ -44,26 +47,32 @@ end
 group :production do
   gem 'mysql2'
 end
-```
+{% endhighlight %}
+
 配置信息处也需要修改下
-```ruby config/environments/production.rb
+{% highlight ruby %}
+# config/environments/production.rb
 config.serve_static_assets = true
-```
+{% endhighlight %}
+
 Bundle your application:
-```sh
+{% highlight bash %}
 bundle package
 bundle install
-```
+{% endhighlight %}
+
 Assets
-```sh
+{% highlight bash %}
 rake assets:precompile
-```
+{% endhighlight %}
+
 Deploy
-```
+{% highlight bash %}
 vmc push --runtime ruby19
-```
+{% endhighlight %}
+
 发布过程
-```sh
+{% highlight bash %}
 Name> example             # 设置应用的名称
 
 Instances> 1
@@ -117,35 +126,41 @@ Checking example...
   0/1 instances: 1 down
   0/1 instances: 1 flapping
 Application failed to start.
-```
+{% endhighlight %}
+
 这里解释下，vmc push后会产生一个manifest.yml的文件，刚才所有的设置都会记录在其中。
 
 很明显这里应用没有启动成功，那问题处在哪里呢？
 
 首先我查看下应用的状态
-```
+{% highlight bash %}
 vmc apps
-```
-```
+{% endhighlight %}
+
+{% highlight bash %}
 Getting applications... OK
 
 name        status    usage      runtime   url                             
 example     0%        1 x 256M   ruby19    example.cloudfoundry.com
-```
-```
+{% endhighlight %}
+
+{% highlight bash %}
 vmc services
-```
-```
+{% endhighlight %}
+
+{% highlight bash %}
 Getting services... OK
 
 name                 service   version
 example_datebase     mysql     5.1  
-```
+{% endhighlight %}
+
 这里我们可以看到数据库和应用都是正确的，只是在启动的时候发生的意外。这时我们可以直接查看下日志
-```
+{% highlight bash %}
 vmc logs example
-```
-```
+{% endhighlight %}
+
+{% highlight bash %}
 Using manifest file manifest.yml
 
 Getting logs for example #0... OK
@@ -154,12 +169,14 @@ Reading logs/migration.log... OK
 /var/vcap/data/dea/apps/example-0-db496108f915e5d9ec906e10a6ee9f12/app/rubygems/ruby/1.9.1/gems/bundler-1.2.1/lib/bundler/source.rb:801:in `rescue in load_spec_files': git://github.com/nadarei/mina.git (at master) is not checked out. Please run `bundle install` (Bundler::GitError)
   from /var/vcap/data/dea/apps/example-0-db496108f915e5d9ec906e10a6ee9f12/app/rubygems/ruby/1.9.1/gems/bundler-1.2.1/lib/bundler/source.rb:799:in `load_spec_files'
 ...........
-```
+{% endhighlight %}
+
 这里我们可以发现是mina造成的bundle的错误，修改一下相应的错误后重新发布
-```
+{% highlight bash %}
 vmc push
-```
-```
+{% endhighlight %}
+
+{% highlight bash %}
 Using manifest file manifest.yml
 
 Uploading example... OK
@@ -172,11 +189,12 @@ Checking example...
   0/1 instances: 1 starting
   1/1 instances: 1 running
 OK
-```
+{% endhighlight %}
+
 这次很顺利没有再出现问题，它直接调用manifest.yml保存的部署设置。访问下example.cloudfoundry.com就可以直接看到你刚部署的应用。
 
 ### 5.vmc其他命令
-```
+{% highlight bash %}
 vmc help
 vmc update [APP]
 vmc stop [APP]
@@ -186,7 +204,7 @@ vmc delete [APP]
 vmc logs [APP]
 vmc instances [APP]      # 列出你有的instances
 vmc scale [APP]          # 更新应用的instances/memory limit
-```
+{% endhighlight %}
 
 #### 参考：
 * http://clark1231.iteye.com/blog/1770692

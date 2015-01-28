@@ -13,41 +13,45 @@ AngularJS来自Google ，开发它人认为基于 DOM 的模板会得到浏览�
 Ember的开发者Yehuda Katz之前开发过 jQuery 和 Rails, 它的设计参考了不少Rails和Cocoa。想来会对Rails开发者的胃口，就冲这一点也是值得一试的。
 
 这里的话，我先了学习下AngularJS，虽然Google在Reader的事情上，令人不爽，但Google推出的东西还是挺值得关注的，谁让它是互联网的老的呢。
-<!-- more -->
 
 ### 1.创建一个基本的rails应用(angularjs)
-```sh
+{% highlight bash %}
 rails new angularjs --skip-bundle -T
 cd angularjs
 rails g scaffold task title:string finished:boolean
 rake db:create
 rake db:migrate
 rm public/index.html
-```
+{% endhighlight %}
 
 ### 2.修改root
-```ruby config/routes.rb
+{% highlight ruby %}
+# config/routes.rb
 root :to => 'tasks#index'
-```
+{% endhighlight %}
 
 ### 3.引入angularjs
 在rails项目中引入angularjs可以直接用gem，有两个可供选择的gem，[angularjs-rails](https://github.com/hiravgandhi/angularjs-rails)和[angular-rails](https://github.com/ludicast/angular-rails)。当然你也可以直接angular.min.js放入到app/assets/javascripts/中，这样能确保用的是最新的版本。我这里用的是稳定版1.0.6
 
 在app/views/layout/application.html.erb中
-```html
+{% highlight html %}
 <html ng-app> 
-```
+{% endhighlight %}
+
 然后在app/assets/javascripts/tasks_controller.js中写入针对angular.js的 tasks controller
-```js app/assets/javascripts/tasks_controller.js
+{% highlight javascript %}
+# app/assets/javascripts/tasks_controller.js
 function TasksCtrl($scope) {
   $scope.tasks = [
     {"title":"Buy milk", "finished":false},
     {"title":"Wash car", "finished":true}
   ]
 }
-```
+{% endhighlight %}
+
 这里我们首先使用写死的数据试下效果
-```html app/views/tasks/index.html.erb
+{% highlight html %}
+# app/views/tasks/index.html.erb
 <div ng-controller='TasksCtrl'>
   <ul>
     <li ng-repeat='task in tasks'>
@@ -55,20 +59,22 @@ function TasksCtrl($scope) {
     </li>
   </ul>
 </div>
-```
+{% endhighlight %}
+
 这样我们就可以在页面上看到"Buy milk"和"Wash car"的字样，证明angular起到作用了。
 
 当然正式用的不可能还是用写死的假数据，如果想要获得rails中的真实数据，最简单的方式是使用angular.js中的$http。它从tasks.json中获取数据.
-```js
+{% highlight javascript %}
 function TasksCtrl($scope, $http) {
   $http.get('/tasks.json').success(function(data) {
     $scope.tasks = data;
     console.log(data);
   });
 }
-```
+{% endhighlight %}
+
 下面是 angular.js 和 rails 中 resource 的对比
-```
+{% highlight bash %}
 HTTP Verb      Path               action      Angular.js
 GET            /photos            index       'query': {method:'GET', isArray:true}
 GET            /photos/new        new
@@ -77,7 +83,7 @@ GET            /photos/:id        show        'get': {method:'GET'}
 GET            /photos/:id/edit   edit
 PUT            /photos/:id        update
 DELETE         /photos/:id        destroy     'remove' or 'delete': {method:'DELETE'}
-```
+{% endhighlight %}
 
 代码地址：https://github.com/caok/angularjs-samples/tree/v0.1/angularjs
 

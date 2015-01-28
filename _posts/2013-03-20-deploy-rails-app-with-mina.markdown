@@ -9,35 +9,39 @@ categories: [Rails, Mina]
 capistrano是使用的最多的部署工具，最近社区中不少人开始推荐[mina](https://github.com/nadarei/mina),试着用了下部署的速度的确快了很多。虽然mina最近两个月都没有更新，不过仍然希望这个项目能得到很好的发展。
 
 下面简单总结下使用mina简单部署rails应用的过程。
-<!-- more -->
 
 ### 1.安装mina
-```ruby Gemfile
+{% highlight ruby %}
+# Gemfile
 group :development do
   gem 'mina', :git => 'git://github.com/nadarei/mina.git'
 end
-```
+{% endhighlight %}
+
 使用mina 0.2.1的时候可能会出现[Mina hangs after entering SSH password](https://github.com/nadarei/mina/issues/88), 而0.2.0的版本没有这个问题,但为了使用最新的版本可以直接从原项目中取(这样的话在执行mina命令时要加上bundle exec).
 
 ### 2.初始化mina
-```sh
+{% highlight bash %}
 bundle
 bundle exec mina init
-```
+{% endhighlight %}
+
 它将创建部署文件config/deploy.rb
 
 ### 3.创建你的服务器
-```sh
+{% highlight bash %}
 $ ssh username@your.server.com
 
 # Once in your server, create the deploy folder:
 ~@your.server.com$ mkdir /var/www/foobar.com
 ~@your.server.com$ chown -R username /var/www/foobar.com
-```
+{% endhighlight %}
+
 这样可以避免部署时出现的sudo的错误
 
 ### 4.配置mina
-```ruby config/deploy.rb
+{% highlight ruby %}
+# config/deploy.rb
 require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
@@ -95,16 +99,17 @@ task :deploy => :environment do
     end
   end
 end
-```
+{% endhighlight %}
 
 ### 5.服务器目录初始化
-```sh
+{% highlight bash %}
 bundle exec mina setup
-```
+{% endhighlight %}
+
 也可以这样操作，使提示更加详细些
-```sh
+{% highlight bash %}
 bundle exec mina setup --verbose
-```
+{% endhighlight %}
 
 ### 6.进行项目部署
     bundle exec mina deploy

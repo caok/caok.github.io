@@ -7,23 +7,26 @@ categories: [Rails, Nginx, Capistrano, Unicorn]
 ---
 
 之前分别介绍了下capistrano和nginx的使用，这里汇总一下，大致介绍下用上述工具部署rails项目的设置。
-<!-- more -->
 
 #### 1.加载capistrano和unicorn
-```ruby Gemfile
+{% highlight ruby %}
+# Gemfile
 gem "capistrano"
 gem "unicorn"
-```
+{% endhighlight %}
+
     bundle install
 
 #### 2.安装nginx
-```sh
+{% highlight bash %}
 sudo apt-get install nginx
-```
+{% endhighlight %}
 
 #### 3.设置unicorn
 这里我们需要unicorn的一个配置文件: config/unicorn.rb
-```ruby config/unicorn.rb
+{% highlight ruby %}
+#config/unicorn.rb
+
 # encoding: utf-8
 # Set your full path to application.
 application = "example_app"
@@ -81,7 +84,8 @@ end
 before_exec do |server|
   ENV["BUNDLE_GEMFILE"] = "#{current_path}/Gemfile"
 end
-```
+{% endhighlight %}
+
 如果想要让该项目的unicorn开机启动，可以参考[unicorn_init.sh](https://gist.github.com/happypeter/3977557).
 
 #### 4.设置capistrano
@@ -89,7 +93,9 @@ end
     capify .
 
 配置
-```ruby config/deploy.rb
+{% highlight ruby %}
+#config/deploy.rb
+
 # encoding: utf-8
 # add config/deploy to load_path
 $: << File.expand_path('../deploy/', __FILE__)
@@ -160,23 +166,29 @@ namespace :deploy do
     run "cd #{current_path} && rake db:seed RAILS_ENV=#{rails_env}"
   end
 end
-```
+{% endhighlight %}
+
 这里的“$: << File.expand_path('../deploy/', __FILE__)”设置是为了让数据更加安全些，具体做法参考[capistrano and unicorn](http://caok1231.com/blog/2013/02/28/capistrano-and-unicorn/)或者[capistrano and database.yml](http://www.simonecarletti.com/blog/2009/06/capistrano-and-database-yml/)
 
 #### 5.部署代码
 预先生成好数据库
-```
+
+{% highlight bash %}
 mysql -h HOSTNAME -u USERNAME -p
 create database DATABASE_NAME default character set utf8;
-```
-```
+{% endhighlight %}
+
+{% highlight bash %}
 cap deploy:setup
 cap deploy:cold
-```
+{% endhighlight %}
+
 此时你可以打开loccalhost:9000查看你的应用
 
 #### 6.设置nginx
-```sh /etc/nginx/sites-available/rails_nginx.conf
+{% highlight bash %}
+#/etc/nginx/sites-available/rails_nginx.conf
+
 upstream app_server {
   # for UNIX domain socket setups:
   server unix:/tmp/unicorn.example_app.sock fail_timeout=0;
@@ -208,14 +220,16 @@ server {
     root /u/app/example_app/current/public;
   }
 }
-```
+{% endhighlight %}
+
 留意这里的app_server在upstream和location中都要替换掉才行
-```
+{% highlight bash %}
 cd /etc/nginx/sites-enabled
 ls -l
 sudo rm default
 sudo ln -s /etc/nginx/sites-available/rails_nginx.conf rails
-```
+{% endhighlight %}
+
 重启nginx，使设置生效
     sudo service nginx restart
 
