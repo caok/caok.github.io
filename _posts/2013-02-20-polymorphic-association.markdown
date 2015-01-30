@@ -8,14 +8,13 @@ categories: [Rails]
 
 所谓多态关联，就是一个model可以通过单一的关联从属于多个model。比如article、photo、event等都需要评论(comment)，如果没有多态关联，就需要为每个model都建立属于自己的comment model，这样代码会有很多的重复。通过[polymorphic-associations](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations)就可以只建立一个comment model，然后让每一条comment知道自己属于哪个model就可。
 
-<!-- more -->
-
 ### 1.创建comment model
-```
+{% highlight ruby %}
 rails g model Comment content:text commentable_id:integer commentable_type:string
-```
+{% endhighlight %}
+
 通过此命令生成的migration文件为：
-```ruby
+{% highlight ruby %}
 class CreateComments < ActiveRecord::Migration
   def change          
     create_table :comments do |t| 
@@ -26,9 +25,10 @@ class CreateComments < ActiveRecord::Migration
     end               
   end                 
 end  
-```
+{% endhighlight %}
+
 这个migration可以通过t.references来简化，并且对其增加索引来提速。
-```ruby
+{% highlight ruby %}
 class CreateComments < ActiveRecord::Migration
   def change          
     create_table :comments do |t| 
@@ -39,23 +39,28 @@ class CreateComments < ActiveRecord::Migration
     add_index :comments, [:commentable_id, :commentable_type]
   end
 end
-```
+{% endhighlight %}
+
 给相应的model增加关联
-```ruby app/model/comment.rb
+{% highlight ruby %}
+# app/model/comment.rb
 class Comment < ActiveRecord::Base
   belongs_to :commentable, :polymorphic => true
 end
-```
+{% endhighlight %}
+
 在article、photo、event的model中增加
-```ruby
+{% highlight ruby %}
 has_many :comments, :as => :commentable
-```
+{% endhighlight %}
 
 ### 3.创建comment controller
-```
+{% highlight ruby %}
 rails g controller comment index new
-```
-```ruby app/controllers/comments_controller.rb
+{% endhighlight %}
+
+{% highlight ruby %}
+# app/controllers/comments_controller.rb
 class CommentsController < ApplicationController
   before_filter :load_commentable 
  
@@ -83,43 +88,55 @@ class CommentsController < ApplicationController
     @commentable = resource.singularize.classify.constantize.find(id)   # Artiale.find(1)
   end
 end
-```
+{% endhighlight %}
+
 ### 4.设置[nested resources](http://guides.rubyonrails.org/routing.html#nested-resources)
-```ruby config/routes.rb
+{% highlight ruby %}
+# config/routes.rb
 resources :articles do
   resources :comments
 end
 #同理处理photo和event
-```
+{% endhighlight %}
+
 这样我们就可以通过URL(/articles/1/comments)访问一篇文章article的所有评论
 
 ### 5.增加相应的views
-```ruby app/views/comments/index.html.slim
+{% highlight ruby %}
+# app/views/comments/index.html.slim
 h1 Comments
 = render 'comments'
 p= link_to "New comment", [:new, @commentable, :comment]
-```
-```ruby app/views/comments/_comments.html.slim
+{% endhighlight %}
+
+{% highlight ruby %}
+#app/views/comments/_comments.html.slim
 - @comments.each do |comment|
   .comment
     = simple_format comment.content
     = link_to "Change", [:edit, @commentable, comment]
     = link_to "Delete", [@commentable, comment], :method => :delete
-```
-```ruby app/views/comments/new.html.slim
+{% endhighlight %}
+
+{% highlight ruby %}
+# app/views/comments/new.html.slim
 h1 Comments#new
 = render 'form'
-```
-```ruby app/views/comments/_form.html.slim
+{% endhighlight %}
+
+{% highlight ruby %}
+# app/views/comments/_form.html.slim
 = form_for [@commentable, @comment] do |f|
   .field
     = f.text_area :content
   = f.submit
-```
+{% endhighlight %}
+
 这里将index和create中的部分给抽出来，方便在其他地方使用
 
 ### 6.在article中增加comments
-```ruby app/views/articles/show.html.slim
+{% highlight ruby %}
+# app/views/articles/show.html.slim
 h1= @article.name
 = simple_format @article.content
 p= link_to "Back to Articles", articles_path
@@ -127,18 +144,21 @@ p= link_to "Back to Articles", articles_path
 h2 Comments
 = render "comments/comments"
 = render "comments/form"
-```
+{% endhighlight %}
+
 相应的需要在article的show中处理下
-```ruby app/controllers/articles_controller.rb
+{% highlight ruby %}
+# app/controllers/articles_controller.rb
 def show
   @article = Article.find(params[:id])
   @commentable = @article
   @comments = @commentable.comments
   @comment = Comment.new
 end
-```
+{% endhighlight %}
+
 这样就可以直接在articles/1中直接增加评论，当然需要修改下comment创建成功后的跳转。
-```ruby
+{% highlight ruby %}
 def create
   @comment = @commentable.comments.new(params[:comment])
   if @comment.save
@@ -147,7 +167,7 @@ def create
     render :new              
   end
 end
-```
+{% endhighlight %}
 
 #### 参考：
 * http://guides.rubyonrails.org/association_basics.html#polymorphic-associations

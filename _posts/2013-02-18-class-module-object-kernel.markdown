@@ -6,36 +6,36 @@ comments: true
 categories: [Ruby]
 ---
 
-<!-- more -->
-```ruby
+{% highlight ruby %}
 Class.class       ==> Class
 Module.class      ==> Class
 Object.class      ==> Class
 Kernel.class      ==> Module
 BasicObject.class ==> Class
-```
+{% endhighlight %}
 
 Class\Module\Object\BasicObject都是Class,只有Kernel是Module
 
-```ruby
+{% highlight ruby %}
 Class.superclass        ==> Module
 Module.superclass       ==> Object
 Object.superclass       ==> BasicObject
 Kernel.superclass       ==> NoMethodError: undefined method `superclass' for Kernel:Module`
 BasicObject.superclass  ==> nil
-```
+{% endhighlight %}
 
 Class类继承了Module类，Module类继承了Object类，Object类继承了BasicObject类，BasicObject类是所有类的祖先.
 
 Kernel为Module，理解为系统预定义的一些方法，我们可以在所有的对象上使用，使用时不需要使用类型作为前缀，当然我们也可以加上Kernel
 
-```ruby
+{% highlight ruby %}
 Class.ancestors         ==> [Class, Module, Object, Kernel, BasicObject]
 Module.ancestors        ==> [Module, Object, Kernel, BasicObject]
 Object.ancestors        ==> [Object, Kernel, BasicObject]
 Kernel.ancestors        ==> [Kernel]
 BasicObject.ancestors   ==> [BasicObject]
-```
+{% endhighlight %}
+
 BasicObject类是所有类的父类,而Object混入了Kernel这个模块，又由于Object是Ruby中所有类的父类，这样以来，Kernel中内建的核心函数就可以被Ruby中除了BasicObject的所有的类和对象访问。
 
 Object的实例方法由Kernel模块定义。
