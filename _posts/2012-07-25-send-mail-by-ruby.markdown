@@ -7,9 +7,8 @@ categories: [Ruby, Mail]
 ---
 
 利用ruby查询当前的外网的ip地址并将其发送到指定的邮箱，同时增加了发送附件的例子。
-<!-- more -->
 
-```
+{% highlight ruby %}
 #mail_backup.rb
 #!/usr/bin/env ruby
 #
@@ -47,7 +46,7 @@ open("http://checkip.dyn.com") do |f|
   filename = "mysql-" + Time.now.strftime("%Y-%m-%d").to_s + ".sql.gz"   #定义需要发送的附件
   Notifer.mailip ip, ARGV[0], ARGV[1] || 'caok1231@gmail.com', ARGV[2] || filename
 end
-```
+{% endhighlight %}
 
 使用:
 ruby mail_backup.rb topic example@gmail.com filename

@@ -10,16 +10,16 @@ categories: [Ubuntu,Vim]
 ----------
 要"进入"VIM可以直接在系统提示下键入"VIM 文件名称"，VIM可以自动帮你载入所要编辑的文件或是开启一个新文件。进入VIM后屏幕左方会出现波浪符号，凡是行首有该符号就代表此列目前是空的。要离开VIM可以在指令模式下键入":q"，,":wq"指令则是存档後再离开r(注意冒号r)。要切换到指令模式下则是用"ESC"键，如果不晓得现在是处於什麽模式，可以多按几次"ESC"，系统会发出哔哔声以确定进入指令模式。
 
-<!-- more -->
-
 档案指令
 --------
 档案指令多以 : 开头，跟编辑指令有点区别。
 
 :q 结束编辑(quit)
+
 > 如果不想存档而要放弃编 辑过的档案则用 :q! 强制离开。
 
 :w 存档(write)
+
 > 其后可加所要存档的档名。
 > 可以将档案指令合在一起，例如 :wq 即存档后离开。
 > zz 功能与 :wq 相同。
@@ -178,14 +178,17 @@ TAB 就是制表符, 单独拿出来做一节是因为这个东西确实很有�
 
 ----
 ## vi配置
+
 https://github.com/wongyouth/vimfiles
 
 A handful of plugins for vim all maintained in one bundle subdirectory, useful vim configuration, espacially for Rails coding. All plugins are included as submodules, so you can get plugins updated in one command that makes life easier.
 
 One Line Installation:
+
     bash < <(curl -s https://raw.github.com/wongyouth/vimfiles/master/install.sh)
 
 Old School Installation:
+
     # Checkout configuration files
     git clone git://github.com/wongyouth/vimfiles ~/vimfiles
 
@@ -199,6 +202,7 @@ Old School Installation:
     git submodule update
 
 ## Usage
+
      :Helptags for build vim plugin doc
      F7        for NERDTree toggle
      F4        for paste toggle

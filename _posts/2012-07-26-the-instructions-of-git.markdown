@@ -12,8 +12,6 @@ ubuntu上安装git
 sudo apt-get install git-core
 sudo apt-get install gitk（一个较好的git图形工具）
 ```
-<!-- more -->
-
 
 git配置
 -------
@@ -108,6 +106,7 @@ git基础
      * [new branch]      ticgit     -> pb/ticgit
 
 ##### 对远程仓库的操作
+
     git push origin master     推送数据到远程仓库
     git remote show origin     查看远程仓库信息
     git remote rename pb paul  远程仓库的重命名（pb => paul）
@@ -185,6 +184,7 @@ git基础
     git checkout issue1  切换到分支issue1
 
 等同于
+
 > git checkout -b issue1  生存一个本地分支并切换到它
 
 git commit -am 'fix issue1'  修改后提交

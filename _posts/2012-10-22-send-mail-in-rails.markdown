@@ -14,9 +14,7 @@ categories: [Rails, Web, Mail]
     create   app/views/notice_mailer
     create   app/views/notice_mailer/decomp_change.text.erb
 
-<!-- more -->
-
-```
+{% highlight ruby %}
 # app/mailers/notice_mailer.rb
 class NoticeMailer < ActionMailer::Base
   default from: "from@example.com"
@@ -26,10 +24,10 @@ class NoticeMailer < ActionMailer::Base
     mail to: "to@example.org"
   end
 end
-```
+{% endhighlight %}
 
 #### 2.Sending Attachments in Mail
-```
+{% highlight ruby %}
 #app/mailers/notice_mailer.rb
 class NoticeMailer < ActionMailer::Base
   default from: "from@example.com"
@@ -41,10 +39,10 @@ class NoticeMailer < ActionMailer::Base
     mail to: @notice.email, subject: 'Your decomp stage has changed'
   end
 end
-```
+{% endhighlight %}
 
 #### 3.MAILER VIEWS
-```
+{% highlight ruby %}
 #app/views/notice_mailer/decomp_change.text.erb
 Greetings <%= @notice.name %>,
 
@@ -52,9 +50,9 @@ Greetings <%= @notice.name %>,
 last tweet was: <%= @last_tweet.body %>
 
 Good luck!
-```
+{% endhighlight %}
 
-```
+{% highlight ruby %}
 #app/views/notice_mailer/decomp_change.html.erb
 <h1>Greetings <%= @notice.name %>,</h1>
 
@@ -62,10 +60,10 @@ Good luck!
 last tweet was: <%= @last_tweet.body %></p>
 
 <%= link_to "View yourself", notice_url(@notice) %>
-```
+{% endhighlight %}
 
 #### 4.SENDING MAIL
-```
+{% highlight ruby %}
 #app/models/notice.rb
 class Notice < ActiveRecord::Base
   after_save :decomp_change_notification, if: :decomp_changed?
@@ -75,10 +73,10 @@ class Notice < ActiveRecord::Base
     NoticeMailer.decomp_change(self).deliver
   end
 end
-```
+{% endhighlight %}
 
 #### 5.CONFIG
-```
+{% highlight ruby %}
 #config/environments/development.rb
 config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -89,7 +87,7 @@ config.action_mailer.delivery_method = :smtp
     :authentication       => 'plain',
     :enable_starttls_auto => true
   }
-```
+{% endhighlight %}
 
 #### references：
 http://railscasts-china.com/episodes/how-to-send-emails-in-rails

@@ -9,8 +9,6 @@ categories: [Rails, GoogleMaps]
 在rails中调用google maps，以此可以来实现一个LBS网站。
 这里使用的是<a href="https://github.com/apneadiving/Google-Maps-for-Rails">Google-Maps-for-Rails</a>这个gem。RailsCast中也介绍了一个gem也有相关的功能，<a href="http://railscasts.com/episodes/273-geocoder">geocoder</a>.
 
-<!-- more -->
-
 这里我简单的介绍下Google-Maps-for-Rails的一些使用。
 
 ###事先的准备
@@ -31,7 +29,7 @@ categories: [Rails, GoogleMaps]
     <%= yield :scripts %>
 
 查看下css和javascript添加的位置
-```
+{% highlight ruby %}
 # application.html.erb
 <!DOCTYPE html>
 <html>
@@ -47,7 +45,7 @@ categories: [Rails, GoogleMaps]
     <%= yield :scripts %>
   </body>
 </html>
-```
+{% endhighlight %}
 
 ###基本的配置
 1.生成你的表结构，里面包含country,city,street等若干字段

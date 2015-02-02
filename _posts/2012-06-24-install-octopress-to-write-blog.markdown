@@ -10,12 +10,14 @@ categories: [Octopress]
 ----
 ### 1.准备工作
 首先你必须要有以下的几样东西：
+
 > (1)git，以及github.com帐号，(我这里将blog放置在github上，没有就赶紧注册吧)
 <!-- more -->
 
 > (2)ruby的开发环境，我这使用的Octopress需要Ruby1.9.2，可以使用rbenv或rvm来简单的安装
 
 我使用的是rbenv，简单介绍下安装：
+
 > rbenv install 1.9.2-p290
 
 ### 2.安装Octopress
@@ -36,6 +38,7 @@ categories: [Octopress]
 例如你的 GitHub 帐号是 jack 就将 Repository 命名为 jack.github.com， 完成后会得到一组 GitHub Pages URL http://yourname.github.com/ (注意不能用 https协议，必须用 http协议)。
 
 设定 GitHub Pages
+
     rake setup_github_pages
 
 以上执行后会要求 read/write url for repository ：
@@ -65,6 +68,7 @@ git@github.com:yourname/yourname.github.com.git
     rake update_style             # update the template's style
 
 ### 6.发表新文章
+
     rake new_post["新文章名称"]
 
 会在“source/_posts”目录下自动生成“Timestamp-qing-song-an-zhuang-octopress.markdown”，编辑后即可发布.

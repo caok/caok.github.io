@@ -8,18 +8,19 @@ categories: [Rails]
 
 ### 1.Page caching
 Page caching是最简单最高效的一种，它会将Action最后的HTML结果存成public/下的HTML文件，也就是静态网页。
-<!-- more -->
-```ruby
+
+{% highlight ruby %}
 class ProductsController < ActionController
   caches_page :index
   def index; end
 end
-```
+{% endhighlight %}
+
 不过缺点也同样明显，由于是静态网页，对于任何的request都会返回同一个结果，适用面比较窄。
 比如用kaminari等定义了翻页功能，就将失效，始终停留在第一页。
 
 如果要真的使用的话，可以在有新的product创建的时候更新index。
-```ruby
+{% highlight ruby %}
 class ProductsController < ActionController
   caches_page :index
 
@@ -31,7 +32,8 @@ class ProductsController < ActionController
     expire_page :action => :index
   end
 end
-```
+{% endhighlight %}
+
 expire_page会在有create操作的时候，清除cache里的资料重新生成。
 
 ### 2.Action caching
@@ -41,7 +43,7 @@ Rails在development模式下的cache默认是关闭的。
     config.action_controller.perform_caching = true
 
 action caching与page caching的区别在于request会经过web server并且被rails application接收，直到所有的before filters被处理。
-```ruby
+{% highlight ruby %}
 class ProductsController < ActionController
   before_filter :authenticate, :only => :create
   caches_action :index
@@ -54,7 +56,8 @@ class ProductsController < ActionController
     expire_action :action => :index
   end
 end
-```
+{% endhighlight %}
+
 缺点也和Page caching一样，无法提供不同使用者有不同內容。
 
 expire_action会在有create操作的时候，清除cache里的资料重新生成。
@@ -65,19 +68,20 @@ expire_action会在有create操作的时候，清除cache里的资料重新生�
 Fragment caching可以只缓存HTML中的一小段元素，我們可以自由选择要cache的区域。这种cache发生在View中，所以我們须把cache程式写在View中，用cache包起來要cache的Template：
 
 如果一个页面有多个component被cache，则需要添加suffix来区分它们：
-```ruby
+{% highlight ruby %}
 <% cache(:action => 'recent', :action_suffix => 'all_products') do %>
   All available products:
-```
+{% endhighlight %}
 
 如果你想要一个无需绑定到相应action的cache块，可以赋予一个全局的key
-```ruby
+{% highlight ruby %}
 <% cache 'all_available_products' do %>
   All available products:
 <% end %>
-```
+{% endhighlight %}
+
 cache方法接受一个可选参数。这个参数被用作缓存的key(默认情况下，页面的URL会被作为缓存的key)。如果我们把模型(model)当作参数,那么模型的cache_key属性将被作为这个key。这就是说，当article更新的时候这个缓存片段就会过期。
-```ruby
+{% highlight ruby %}
 <% title @article.name %>  
 <% cache @article do %>  
   <p class="author"><em>from <%=h @article.author_name %></em></p>  
@@ -92,17 +96,19 @@ cache方法接受一个可选参数。这个参数被用作缓存的key(默认�
 <% end %>  
 <h3>Add your comment:</h3>  
 <%= render :partial => 'comments/form' %>
-```
+{% endhighlight %}
+
 cache_key由模型(model)名,模型的id和updated_at属性组成。key的最后一段非常有用，因为这一段组成部分，这个key每次都会应为模型的更新而改变。这样每次模型的任意属性有更改，这个缓存片段都会过期。
 
 在我们的应用程序里一个Article可能有很多Comments。如果我们使用article页面的表单对article添加一条comment，这条comment将不会作为article页面的一部分被显示。这是因为article已经被缓存了，article页面只会显示缓存里面的comments。当一条comment被添加时article的时间戳未被修改，所以缓存片段不会过期。
 
 要想实现当添加或修改comment时article页面显示新的comment，我们仅仅需要对comment模型(model)做一点点修改:
-```ruby
+{% highlight ruby %}
 class Comment < ActiveRecord::Base  
   belongs_to :article, :touch => true  
 end
-```
+{% endhighlight %}
+
 给belongs_to关系添加 :touch => true 意味着当创建，更新或者删除一条comment的时候，该comment属于(belongs_to)的article被touched。现在我们添加一条comment，缓存会失效并且页面会更新而且显示刚添加的comment。
 
 touch: true
@@ -114,13 +120,15 @@ saves the record with the updated_at/on attributes set to the current time
 手动清除
     rake tmp:cache:clear
 在资料修改或刪除时，在适当的Controller Action中过期这些cache资料
-```ruby
+{% highlight ruby %}
 expire_fragment(:controller => 'products', :action => 'recent',  :action_suffix => 'all_prods)
 expire_fragment(:key => ['all_available_products', @latest_product.created_at].join(':'))
-```
+{% endhighlight %}
+
 ### 4.Sweepers
 但如上面这样到处写expire方法，显然不是最好的方式。Rails针对此提供了sweeper机制：把cache清理移入一个observer类，此类会监测一个对象的变化，并且通过相应的钩子来清理此对象相关的cache。
-```ruby sweepers/store_sweeper.rb
+{% highlight ruby %}
+# sweepers/store_sweeper.rb
 class StoreSweeper < ActionController::Caching::Sweeper
   # This sweeper is going to keep an eye on the Product model
   observe Product
@@ -149,9 +157,10 @@ class StoreSweeper < ActionController::Caching::Sweeper
     expire_fragment(:controller => '#{record}', :action => 'recent', :action_suffix => 'all_products')
   end
 end
-```
+{% endhighlight %}
+
 Cache sweeper在controller里面就是一个after或者aroud filter
-```ruby
+{% highlight ruby %}
 class ProductsController < ActionController   
   cache_sweeper :store_sweeper, :only => [ :create, :update, :destroy ]   
   caches_page :list
@@ -162,15 +171,17 @@ class ProductsController < ActionController
   def list
   end
 end
-```
+{% endhighlight %}
+
 ### 5.Counter cache
 如果需要常计算has_many的Model有多少笔记录，例如显示文章列表时，也要显示每篇有多少留言回复。
-```ruby
+{% highlight ruby %}
 <% @topics.each do |topic| %>
   主題：<%= topic.subject %>
   回复數：<%= topic.posts.size %>
 <% end %>
-```
+{% endhighlight %}
+
 这时Rails会产生一笔笔的SQL count查询：
     SELECT * FROM `posts` LIMIT 5 OFFSET 0
     SELECT count(*) AS count_all FROM `posts` WHERE (`posts`.topic_id = 1 )
@@ -185,7 +196,7 @@ Counter cache功能可以把這個數字存進資料庫，不再需要一筆筆�
     rails g migration add_posts_count_to_topic
 
 编辑Migration：
-```ruby
+{% highlight ruby %}
 class AddPostsCountToTopic < ActiveRecord::Migration
   def self.up
     add_column :topics, :posts_count, :integer, :default => 0
@@ -200,9 +211,10 @@ class AddPostsCountToTopic < ActiveRecord::Migration
     remove_column :topics, :posts_count
   end
 end
-```
+{% endhighlight %}
+
 编辑Models，加入:counter_cache => true：
-```ruby
+{% highlight ruby %}
 class Topic < ActiveRecord::Base
   has_many :posts
 end
@@ -210,11 +222,12 @@ end
 class Posts < ActiveRecord::Base
   belongs_to :topic, :counter_cache => true
 end
-```
+{% endhighlight %}
+
 这样同样的@topic.posts.size，就会自动变成使用@topic.posts_count，而不會用SQL count查詢一次。
 
 ### 6.rails.cache
-```sh
+{% highlight ruby %}
 Rails.cache.read("city")   # => nil
 Rails.cache.write("city", "Duckburgh")
 Rails.cache.read("city")   # => "Duckburgh"
@@ -227,7 +240,7 @@ cache.fetch("city") do
   "Duckburgh"
 end
 cache.fetch("city")   # => "Duckburgh"
-```
+{% endhighlight %}
 
 #### 参考
 * [http://robbinfan.com/blog/38/orm-cache-sumup](http://robbinfan.com/blog/38/orm-cache-sumup)

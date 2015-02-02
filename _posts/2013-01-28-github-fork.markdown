@@ -7,7 +7,6 @@ categories: [Git]
 ---
 
 Step 1: Fork the "Spoon-Knife" repo
-<!-- more -->
 
 Step 2: Clone your fork
 
@@ -36,6 +35,7 @@ Step 3: Configure remotes
     git merge upstream/master
 
 修改代码时
+
     1.本地新建分支
     git checkout -b add_sth
     2.把本地的 add_sth 分支保存的 github 上

@@ -8,7 +8,6 @@ categories: [Ubuntu, SSH]
 
 ### 1 SSH 公钥认证
 (1)生成公钥
-<!-- more -->
 
     ssh-keygen
 
@@ -32,6 +31,7 @@ categories: [Ubuntu, SSH]
     ssh-copy-id -i .ssh/<filename>.pub user@server
 
 SSH的客户端配置文件 ~/.ssh/config 可以通过创建主机别名，在连接主机时，使用特定的公钥。例如 ~/.ssh/config 文件中的下列配置：
+
     host bj
       user git
       hostname bj.ossxp.com
@@ -39,10 +39,15 @@ SSH的客户端配置文件 ~/.ssh/config 可以通过创建主机别名，在�
       identityfile ~/.ssh/jiangxin
 
 当执行
+
     $ ssh bj
+
 或者执行
+
     $ git clone bj:path/to/repo.git
+
 含义为：
+
     登录的 SSH 主机为 bj.ossxp.com 。
     登录时使用的用户名为 git 。
     认证时使用的公钥文件为 ~/.ssh/jiangxin.pub 。

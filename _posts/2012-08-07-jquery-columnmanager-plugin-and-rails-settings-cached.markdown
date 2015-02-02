@@ -7,7 +7,6 @@ categories: [Rails, Javascript, Web]
 ---
 
 在平时页面显示表格时，容易出现要显示的字段过多，而在一页的范围内无法完全显示的困境。通过juery columnanager可以实现显示和隐藏的效果，再通过rails-settings-cached将其与个人偏好设置相关联，使得更加人性化。
-<!-- more -->
 
 ### 安装rails-settings-cached
 Edit your Gemfile:
@@ -36,7 +35,7 @@ Settings may be bound to any existing ActiveRecord object. Define this associati
 
 ### 两者的配合使用
 页面上调用
-```
+{% highlight ruby %}
 <div id="targetcol">
 </div>
 
@@ -59,19 +58,19 @@ Settings may be bound to any existing ActiveRecord object. Define this associati
     }    
   });    
 </script>
-```
+{% endhighlight %}
 
 这里将点击后的效果通过ajax保存到用户的settings中，其中保存了url、index、state这几个属性值, 并在下次打开页面时通过hide_cloumns取出原先保存的值,起到一个人性化的效果。
 
 编辑routes
-```
+{% highlight ruby %}
   resources :users do
     post :hide, :on => :collection
   end
-```
+{% endhighlight %}
 
 在users_controller中增加hide处理，提供给ajax调用
-```
+{% highlight ruby %}
 # users_controller.rb
 def hide
   p = current_user.settings.pagesetups
@@ -84,10 +83,10 @@ def hide
   current_user.settings.pagesetups = p
   render :nothing => true
 end
-```
+{% endhighlight %}
 
 取出用户对于table中字段隐藏显示的偏好设置
-```
+{% highlight ruby %}
 # user.rb
 def hide_columns(url)
   if settings.pagesetups and settings.pagesetups[url]
@@ -98,7 +97,7 @@ def hide_columns(url)
   lists = p.delete_if {|k,v| v != "false" }.keys
   "[" + lists * "," + "]"    
 end
-```
+{% endhighlight %}
 
 #### 参考
 <a href="http://p.sohei.org/stuff/jquery/columnmanager/demo/demo.html">jQuery columnManager plugin</a>

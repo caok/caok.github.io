@@ -7,7 +7,6 @@ categories: [Git, Ubuntu]
 ---
 
 ### 1. git安装
-<!-- more -->
 
     安装Git-Core:
     sudo apt-get install git-core

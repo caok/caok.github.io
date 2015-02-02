@@ -7,13 +7,13 @@ categories: [Ubuntu]
 ---
 
 #### 第一步：下载jdk
+
     wget -c http://download.oracle.com/otn-pub/java/jdk/7/jdk-7-linux-i586.tar.gz
 
 (注：如果下载不下来，建议使用另外的下载工具下载，然后拷贝到Linux系统上。)
 
-<!-- more -->
-
 #### 第二步：解压安装
+
     sudo tar zxvf ./jdk-7-linux-i586.tar.gz -C /usr/lib/jvm
     cd /usr/lib/jvm
     sudo mv jdk1.7.0/ java-7-sun
@@ -64,6 +64,7 @@ categories: [Ubuntu]
 update-alternatives: 使用 /usr/lib/jvm/java-7-sun/bin/java 来提供 /usr/bin/java (java)，于 手动模式 中。
 
 #### 第五步：测试
+
     XXX@xxxx:~$ java -version
     java version "1.7.0"
     Java(TM) SE Runtime Environment (build 1.7.0-b147)

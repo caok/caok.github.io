@@ -9,13 +9,11 @@ categories: [Rails, Bootstrap, Web]
 ### 1.Installing Gem
 Include the Twitter Bootstrap Rails gem in Gemfile to install it from RubyGems.org
 
-<!-- more -->
-
-```
+{% highlight ruby %}
 group :assets do
   gem 'twitter-bootstrap-rails'
 end
-```
+{% endhighlight %}
 
 You can run bundle from command line
 
@@ -36,7 +34,7 @@ you can use
 
 or define it by yourself
 
-```
+{% highlight ruby %}
 #layouts/application.html.erb
 <!DOCTYPE html>
 <html>
@@ -97,9 +95,9 @@ or define it by yourself
     </div>
   </body>
 </html>
-```
+{% endhighlight %}
 
-```
+{% highlight ruby %}
 app/views/layouts/_messages.html.erb
 <% flash.each do |name, msg| %>
   <% if msg.is_a?(String) %>
@@ -109,7 +107,7 @@ app/views/layouts/_messages.html.erb
     </div>
   <% end %>
 <% end %>
-```
+{% endhighlight %}
 
 ### 3.Themed (generates Twitter Bootstrap compatible scaffold views.)
     rails g bootstrap:themed products -f
@@ -119,14 +117,14 @@ app/views/layouts/_messages.html.erb
     bundle install
     rails g simple_form:install --bootstrap
 
-```
+{% highlight ruby %}
 <div class="control-group">
   <%= f.label :name, :class => 'control-label' %>
   <div class="controls">
     <%= f.text_field :name, :class => 'text_field' %>
   </div>
 </div>
-```
+{% endhighlight %}
 
 修改为
 
