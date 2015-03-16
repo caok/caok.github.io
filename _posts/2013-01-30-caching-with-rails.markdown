@@ -203,7 +203,7 @@ class AddPostsCountToTopic < ActiveRecord::Migration
 
     # 如果是网站上线后才新增这个功能，这里需要先计算设定好初始值
     Topic.find_each do |topic|
-      topic.update_attribute(:posts_count, topic.posts.size)
+      Topic.reset_counters topic.id, :posts
     end
   end
 
