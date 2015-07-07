@@ -1,0 +1,43 @@
+---
+layout: post
+title: "vpn与翻墙"
+date: 2015-07-07 17:00
+---
+
+最近比较关注海淘，发现周围想海淘的人经常在问翻墙是怎么一回事，我这解释一下，并介绍一下常用的一些翻墙的方式。
+
+所谓翻墙，是指绕过相应的IP封锁、内容过滤、域名劫持、流量限制等，实现对网络内容的访问。大家都知道在国内经常会无法访问到国外的一些知名网站，比如youtube，twitter等, 所以'翻墙'也是一个比较具有中国特色的名词，哈哈.
+
+废话不多说，我这介绍下这几年用到过的翻墙工具
+
+### 1.[自由门](http://www.dongtaiwang.com/loc/download.php)/[无界](http://www.wujieliulan.com/news.htm)
+这两款软件在翻墙工具中算是比较有名的，不过毕竟是免费的，所以难得用用体会下墙外的世界还行，需要经常性的更新软件，而且连接上外部网络后时间长了就会自动断开。
+除此之外安全性的话，这也不好说，说不定会被某些杀毒软件认为是病毒，所以大家可要注意这其中的风险。
+
+[自由门: http://www.dongtaiwang.com/loc/download.php](http://www.dongtaiwang.com/loc/download.php)
+
+[无界: http://www.wujieliulan.com/news.htm](http://www.wujieliulan.com/news.htm)
+
+这两个网站如果打不开，可以去我的百度网盘下载：http://pan.baidu.com/s/1bndM9cj
+
+### 2.vpn
+VPN全称为Virtual Private Network(虚拟专用网络), 原先是企业中使用的，比如说让公司职员在外部访问到企业内网的服务器资源。而中国就像是一个大型的企业内部网络，通过vpn我们就能访问到国外网站。
+
+因为原先就是企业专用的，所以各方面都比较安全，一般的系统中都自带支持vpn， 只要设置好就行, 配置方式可以参考: [https://www.yuntibit.com/guides](https://www.yuntibit.com/guides)
+
+#### 免费的
+在[乱炖](http://levi.cg.am/)中有一项[网络加速计划](http://levi.cg.am/archives/4390), 其中VPN服务为来自世界各地志愿者提供的,欢迎大家加入。
+
+#### 收费的
+对于经常有翻墙需求的人，建议还是购买收费的vpn，毕竟这样能确保稳定性，出了问题可以联系客服。而且眼下价格也比较便宜
+
+我眼下使用的是[云梯](https://www.yuntibit.com), 眼下基本都是整天挂着vpn，每天的使用流量也不会超过1G，所以使用没那么频繁的只要选用180/每年(小流量版，月流量:10G)就足够了。大家可以试试，反正三天内可以无条件退款，:)
+
+这里还有[推荐链接](http://yuntiref.com/?r=2bf2ee56f16d53f2)， 大家通过这个[链接](http://yuntiref.com/?r=2bf2ee56f16d53f2)去注册购买可以获得**10元的优惠**。
+[http://yuntiref.com/?r=2bf2ee56f16d53f2](http://yuntiref.com/?r=2bf2ee56f16d53f2)
+
+### 3.自己搭建
+喜欢折腾的人，可以选择自行购买海外的服务器(比如aws或者DigitalOcean)去搭建翻墙服务
+
+比如大家可以试试[shadowsocks](https://github.com/shadowsocks/shadowsocks), 中文说明：[https://github.com/shadowsocks/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E](https://github.com/shadowsocks/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
+
