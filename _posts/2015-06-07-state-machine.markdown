@@ -48,6 +48,7 @@ order.purchase                 # => raises AASM::InvalidTransition
 order.canceled?                # => return true or false
 order.cancel                   # => 会改变aasm_state的值，但不会保存
 order.cancel!                  # => 会保存
+order.may_purchase?            # => 等同于order.incomplete?
 {% endhighlight %}
 
 如果你想使用自己的字段的话，可以这么使用
