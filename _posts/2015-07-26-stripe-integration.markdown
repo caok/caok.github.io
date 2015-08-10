@@ -84,7 +84,7 @@ end
 
 当用户输入完信用卡信息并检查通过后，"回调"就会获取到[token](https://stripe.com/docs/api#tokens)中的一些信息, 比如后台里需要的stripeToken
 
-{% highlight %}
+{% highlight ruby %}
 The callback to invoke when the Checkout process is complete. 
 function(token) 
 token is the token object created. 
