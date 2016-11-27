@@ -2,8 +2,8 @@
 layout: post
 title: "many to many and polymorphic"
 date: 2014-10-13 17:14
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 最近在项目中遇到一个情景: 多对多 ＋ 多态, 在实现的过程中遇到了一些问题，这里将其整理出来。

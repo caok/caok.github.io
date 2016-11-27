@@ -2,8 +2,8 @@
 layout: post
 title: "blocks procs lambdas"
 date: 2013-02-23 21:17
-comments: true
 categories: [Ruby]
+tags: [Ruby]
 ---
 
 Ruby提供了三种不同的定义函数的方法:blocks, procs 和 lambdas -- 他们都是 Closure (闭包)

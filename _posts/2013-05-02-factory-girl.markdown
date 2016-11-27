@@ -2,8 +2,8 @@
 layout: post
 title: "factory girl"
 date: 2013-05-02 16:33
-comments: true
 categories: [Rails, Test]
+tags: [Rails, Test]
 ---
 
 很多时候我们都会使用 factory-girl 去构建测试数据，但如何去定义表之间的关系，特别是那种用户角色、权限之类的，接下来就稍微总结下如何用[factory girl](https://github.com/thoughtbot/factory_girl) 去定义测试数据中的用户角色。

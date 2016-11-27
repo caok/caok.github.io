@@ -2,8 +2,8 @@
 layout: post
 title: "nginx configuration"
 date: 2013-03-03 20:34
-comments: true
 categories: [Nginx]
+tags: [Nginx]
 ---
 
 之前介绍了nginx的安装和简单使用，有必要简单总结下nginx在配置文件的含义。

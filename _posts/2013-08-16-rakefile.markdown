@@ -2,8 +2,8 @@
 layout: post
 title: "如何手动编写Rakefile"
 date: 2013-08-16 19:51
-comments: true
 categories: [Ruby]
+tags: [Ruby]
 ---
 
 在rails中经常会看到[rake](https://github.com/jimweirich/rake)完成的多种自动化的任务，现在就简单介绍下如何从头写一个Rakefile。

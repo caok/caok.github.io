@@ -2,8 +2,8 @@
 layout: post
 title: "ubuntu network configure"
 date: 2013-09-01 07:45
-comments: true
 categories: [Ubuntu]
+tags: [Ubuntu]
 ---
 
 最近经手的一台服务器主板换了，导致了一些连接网络的问题，把相应的处理总结一下，以便下次再遇到时能不用在纠结那么久。

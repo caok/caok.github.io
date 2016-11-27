@@ -2,8 +2,8 @@
 layout: post
 title: "Responsive Web Design"
 date: 2014-04-01 18:06
-comments: true
 categories: [Web]
+tags: [Web]
 ---
 
 眼下移动设备越来越多，在做网页设计的时候需要考虑的也随着增加。如何能在不同分辨率大小的设备上将同一个页面较好的呈现出来，成为很多web程序员不得不面对的问题。针对这个问题，人们开始提出[Responsive Web Design](http://alistapart.com/article/responsive-web-design),即让同一张网页自动适应不同大小的屏幕，根据屏幕宽度，自动调整布局。

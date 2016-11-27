@@ -2,8 +2,8 @@
 layout: post
 title: "encrypt and decrypt attributes"
 date: 2014-10-27 20:04
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 加密保存到数据库中的字段，但不影响读写

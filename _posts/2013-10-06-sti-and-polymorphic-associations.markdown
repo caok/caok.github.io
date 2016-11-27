@@ -2,8 +2,8 @@
 layout: post
 title: "STI and Polymorphic Associations"
 date: 2013-10-06 15:01
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 ### STI(单表继承)

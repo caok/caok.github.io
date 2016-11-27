@@ -2,6 +2,8 @@
 layout: post
 title: "current_user for model"
 date: 2015-06-09 17:00
+categories: [Rails]
+tags: [Rails]
 ---
 
 {% highlight ruby %}

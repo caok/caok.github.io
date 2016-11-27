@@ -2,8 +2,8 @@
 layout: post
 title: "mysql设置允许外部访问"
 date: 2013-02-27 20:34
-comments: true
-categories: [Mysql]
+categories: [DB]
+tags: [Mysql]
 ---
 
 #### 本地登录mysql

@@ -2,8 +2,8 @@
 layout: post
 title: "endless page"
 date: 2013-03-08 20:53
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 经常会看到[瀑布流](http://baike.baidu.com/view/7151782.htm)，随着瀑布流效果页面滚动条向下滚动，这种布局还会不断加载数据块并附加至当前尾部。

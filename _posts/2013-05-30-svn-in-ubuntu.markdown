@@ -2,8 +2,8 @@
 layout: post
 title: "svn in ubuntu"
 date: 2013-05-30 09:25
-comments: true
 categories: [Ubuntu]
+tags: [Ubuntu]
 ---
 
 ### 1.安装

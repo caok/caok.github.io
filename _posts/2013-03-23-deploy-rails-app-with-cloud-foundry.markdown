@@ -2,8 +2,8 @@
 layout: post
 title: "deploy rails app with cloud foundry"
 date: 2013-03-23 14:17
-comments: true
-categories: [Rails, Vmc]
+categories: [Rails]
+tags: [Rails, Vmc]
 ---
 
 [Cloud Foundry](http://baike.baidu.com/view/8193015.htm)是VMware于2011年4月12日推出的业界第一个开源PaaS云平台，它支持多种框架、语言、运行时环境、云平台及应用服务，使开发人员能够在几秒钟内进行应用程序的部署和扩展，无需担心任何基础架构的问题。

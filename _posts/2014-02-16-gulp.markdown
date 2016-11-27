@@ -2,8 +2,8 @@
 layout: post
 title: "gulp"
 date: 2014-02-16 20:19
-comments: true
 categories: [NodeJs]
+tags: [NodeJs]
 ---
 
 [Gulp](https://github.com/gulpjs/gulp) 是一款基于任务的设计模式的自动化工具。虽然许多人会推荐 [Grunt](https://github.com/gruntjs/grunt) 来实现项目的自动化，但了解了下后发现它的学习曲线有点高。这时发现了 Gulp ，它非常易于学习和使用，对我这种喜欢简单喜欢偷懒的人再适合不过了，而且我想要的功能也都有，所以就用它了，:)

@@ -2,8 +2,8 @@
 layout: post
 title: "install sun jdk in ubuntu"
 date: 2012-10-22 17:49
-comments: true
 categories: [Ubuntu]
+tags: [Ubuntu]
 ---
 
 #### 第一步：下载jdk

@@ -2,8 +2,8 @@
 layout: post
 title: "Angular.js and Rails #1"
 date: 2013-04-05 12:54
-comments: true
-categories:  [AngularJs, Rails]
+categories: [Rails]
+tags: [AngularJs, Rails]
 ---
 
 眼下JavaScript MVC越来越流行，为了紧跟时代的步伐，也打算试着学习下。在众多的[js框架](http://blog.csdn.net/luqin1988/article/details/8701466)中如何作出选择是个挺犯难的事，我比较看中其中的两种。

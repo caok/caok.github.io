@@ -3,7 +3,8 @@ layout: post
 title: "用octopress来写博客"
 date: 2012-06-24 15:07
 comments: true
-categories: [Octopress]
+categories: [Web]
+tags: [Web]
 ---
 
 安装

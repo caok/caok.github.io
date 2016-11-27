@@ -2,8 +2,8 @@
 layout: post
 title: "includes vs joins"
 date: 2013-08-27 07:03
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 ### includes

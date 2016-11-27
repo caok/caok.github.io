@@ -2,8 +2,8 @@
 layout: post
 title: "mysql 常用命令小结"
 date: 2012-05-06 15:32
-comments: true
-categories: [Mysql]
+categories: [DB]
+tags: [Mysql]
 ---
 
 查询

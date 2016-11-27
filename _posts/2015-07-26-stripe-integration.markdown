@@ -2,6 +2,8 @@
 layout: post
 title: "Stripe Integration"
 date: 2015-07-26 13:00
+categories: [Rails]
+tags: [Rails]
 ---
 
 在日常的开发中经常会遇到付款的需求，今天我们介绍下国外特别火的[Stripe](https://stripe.com/), 而且不断有关于stripe和支付宝合作的消息传出，相信在不久之后，stripe也将会出现在中国大众的眼中。废话不多说，我们进入主题。

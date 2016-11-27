@@ -2,8 +2,8 @@
 layout: post
 title: "vim的使用和个人设置"
 date: 2012-05-12 21:50
-comments: true
-categories: [Ubuntu,Vim]
+categories: [Vim]
+tags:  [Vim]
 ---
 
 进入与离开

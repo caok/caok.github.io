@@ -2,8 +2,8 @@
 layout: post
 title: "enums in rails4.1"
 date: 2014-10-28 08:54
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 {% highlight ruby %}

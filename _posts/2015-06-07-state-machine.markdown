@@ -1,8 +1,9 @@
 ---
 layout: post
 title: "State Machine"
-comments: true
 date: 2015-06-07 16:00
+categories: [Rails]
+tags: [Rails]
 ---
 
 在项目中时常会使用到状态机, 如果是在rails项目中使用的话，可以使用[aasm](https://github.com/aasm/aasm), 它是基于active-record. 如果不用rails的话，也有其他选项可以选择[workflow](https://github.com/geekq/workflow) 或 [state_machine](https://github.com/pluginaweek/state_machine).

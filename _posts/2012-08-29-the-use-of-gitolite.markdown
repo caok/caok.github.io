@@ -3,7 +3,8 @@ layout: post
 title: "Gitolite 服务架设"
 date: 2012-08-29 18:13
 comments: true
-categories: [Git, Ubuntu]
+categories: [Git]
+tags: [Git, Ubuntu]
 ---
 
 ### 1. git安装

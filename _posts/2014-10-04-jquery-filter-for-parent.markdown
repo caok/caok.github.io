@@ -2,8 +2,8 @@
 layout: post
 title: "jquery parent() parents() closest()区别"
 date: 2014-10-04 23:49
-comments: true
-categories: [Jquery]
+categories: [Web]
+tags: [Web, Jquery]
 ---
 
 #### parent是找当前元素的第一个父节点，不管匹不匹配都不继续往下找

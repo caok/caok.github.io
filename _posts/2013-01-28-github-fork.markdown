@@ -2,8 +2,8 @@
 layout: post
 title: "github fork"
 date: 2013-01-28 20:11
-comments: true
 categories: [Git]
+tags: [Git]
 ---
 
 Step 1: Fork the "Spoon-Knife" repo

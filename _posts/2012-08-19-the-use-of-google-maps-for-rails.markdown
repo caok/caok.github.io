@@ -2,8 +2,8 @@
 layout: post
 title: "the use of Google-Maps-for-Rails"
 date: 2012-08-19 17:40
-comments: true
-categories: [Rails, GoogleMaps]
+categories: [Rails]
+tags: [Rails, GoogleMaps]
 ---
 
 在rails中调用google maps，以此可以来实现一个LBS网站。

@@ -2,8 +2,8 @@
 layout: post
 title: "tmux"
 date: 2013-04-14 09:45
-comments: true
-categories: [Ubuntu, Tmux]
+categories: [Ubuntu]
+tags: [Ubuntu, Tmux]
 ---
 
 最近经常听说[tmux](http://baike.baidu.com/view/9065064.htm)的大名，但一直都没好好的试试。今天看了[happycasts](http://happycasts.net/episodes/41)和[impressive-ruby-productivity-with-vim-and-tmux](http://confreaks.com/videos/2291-larubyconf2013-impressive-ruby-productivity-with-vim-and-tmux),才知道这么晚使用是个多么不明智的选择。

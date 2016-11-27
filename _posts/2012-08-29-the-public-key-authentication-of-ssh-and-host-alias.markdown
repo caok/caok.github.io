@@ -2,8 +2,8 @@
 layout: post
 title: "SSH公钥认证和主机别名"
 date: 2012-08-29 19:01
-comments: true
-categories: [Ubuntu, SSH]
+categories: [Ubuntu]
+tags: [Ubuntu, SSH]
 ---
 
 ### 1 SSH 公钥认证

@@ -2,8 +2,8 @@
 layout: post
 title: "fork in github"
 date: 2013-05-06 10:17
-comments: true
 categories: [Git]
+tags: [Git]
 ---
 
 简单介绍下github上贡献代码的流程.

@@ -2,8 +2,8 @@
 layout: post
 title: "semi static pages"
 date: 2013-11-24 16:23
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 在日常的使用中静态页面也是比较常见，railscast的[117](http://railscasts.com/episodes/117-semi-static-pages-revised)中介绍了两种处理方法，这里把它总结成文字，方便以后的查询。

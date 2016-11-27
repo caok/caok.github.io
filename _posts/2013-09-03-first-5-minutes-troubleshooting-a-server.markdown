@@ -2,8 +2,8 @@
 layout: post
 title: "First 5 Minutes Troubleshooting A Server"
 date: 2013-09-03 22:58
-comments: true
 categories: [Ubuntu]
+tags: [Ubuntu]
 ---
 
 这几天看了一篇“在服务器上排除问题的头五分钟”觉得对自己很有帮助，有必要转载过来。再把里面的命令之类的稍微解释下。

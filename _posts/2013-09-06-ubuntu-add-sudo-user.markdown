@@ -2,8 +2,8 @@
 layout: post
 title: "Ubuntu添加sudo用户"
 date: 2013-09-06 20:58
-comments: true
 categories: [Ubuntu]
+tags: [Ubuntu]
 ---
 
 

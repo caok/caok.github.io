@@ -2,8 +2,8 @@
 layout: post
 title: "testing rails app #4"
 date: 2013-04-25 20:32
-comments: true
-categories: [Rails, Rspec, Test]
+categories: [Rails, Test]
+tags: [Rails, Rspec, Test]
 ---
 
 前几篇中简单介绍了下rspec的基本用法:

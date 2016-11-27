@@ -2,8 +2,8 @@
 layout: post
 title: "tour of NPM"
 date: 2014-04-07 08:26
-comments: true
 categories: [NodeJs]
+tags: [NodeJs]
 ---
 
 在Nodejs中也有类似Gem的东西，让我们能在项目中轻松的对模块进行管理，它就是node包管理器(NPM)。(当然nodejs中的[nvw](https://github.com/creationix/nvm)就如同ruby中rbenv，顺带一提，哈哈)

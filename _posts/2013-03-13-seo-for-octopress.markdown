@@ -2,8 +2,8 @@
 layout: post
 title: "Seo for Octopress"
 date: 2013-03-13 18:29
-comments: true
-categories: [Octopress]
+categories: [Web]
+tags: [Octopress]
 ---
 
 使用Octopress已经一段时间了，整了个域名，就想着如何才能给自己的博客提升下点击量做点[SEO](http://baike.baidu.com/view/1047.htm).

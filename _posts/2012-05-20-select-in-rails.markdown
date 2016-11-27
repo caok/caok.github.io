@@ -2,8 +2,8 @@
 layout: post
 title: "select in rails"
 date: 2012-05-20 12:52
-comments: true
-categories: [Rails, Select, Web]
+categories: [Rails]
+tags: [Rails, Select]
 ---
 
 一般下拉选择框

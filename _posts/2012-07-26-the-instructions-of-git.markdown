@@ -2,8 +2,8 @@
 layout: post
 title: "git的常用操作"
 date: 2012-07-26 18:01
-comments: true
-categories: [Git, Ubuntu]
+categories: [Git]
+tags: [Git, Ubuntu]
 ---
 
 ubuntu上安装git

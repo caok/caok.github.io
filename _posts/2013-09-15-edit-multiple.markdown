@@ -2,8 +2,8 @@
 layout: post
 title: "edit multiple"
 date: 2013-09-15 20:54
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 railscast的[165 Edit Multiple (revised)](http://railscasts.com/episodes/165-edit-multiple-revised)中介绍下编辑多条数据库记录的方法

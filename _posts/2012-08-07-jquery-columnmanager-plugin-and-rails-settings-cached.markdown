@@ -2,8 +2,8 @@
 layout: post
 title: "jQuery columnManager plugin and rails-settings-cached"
 date: 2012-08-07 18:47
-comments: true
-categories: [Rails, Javascript, Web]
+categories: [Rails]
+tags: [Rails, Javascript, Web]
 ---
 
 在平时页面显示表格时，容易出现要显示的字段过多，而在一页的范围内无法完全显示的困境。通过juery columnanager可以实现显示和隐藏的效果，再通过rails-settings-cached将其与个人偏好设置相关联，使得更加人性化。

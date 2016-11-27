@@ -2,8 +2,8 @@
 layout: post
 title: "testing rails app #3"
 date: 2013-04-17 21:01
-comments: true
-categories: [Rails, Rspec, Test]
+categories: [Rails, Test]
+tags: [Rails, Rspec, Test]
 ---
 
 上一篇总结了下rspec中[基本结构和Matcher](http://caok1231.com/blog/2013/04/15/the-use-of-spec-in-rails/), 现在接着往下，当然我写的这些更多的像是读书笔记，更加详细和权威的可以仔细研究[rspec官方文档](http://rspec.info/)。

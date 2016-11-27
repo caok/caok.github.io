@@ -2,8 +2,8 @@
 layout: post
 title: "exception notifier"
 date: 2013-02-16 18:59
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 在web应用中很多时候会遇到系统例外的异常，第一时间将出错信息发送给维护者/开发者是很重要的，所以这里记录下如何处理这一问题。

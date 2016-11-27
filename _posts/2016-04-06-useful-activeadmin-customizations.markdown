@@ -2,6 +2,8 @@
 layout: post
 title: "Useful ActiveAdmin Customizations"
 date: 2016-04-06 13:00
+categories: [Rails]
+tags: [Rails]
 ---
 
 在日常的应用的经常会遇到需要一个简单的管理后台, 而[ActiveAdmin](http://activeadmin.info/)常会成为我们的首选。这里我们搜集些可能会用到的配置

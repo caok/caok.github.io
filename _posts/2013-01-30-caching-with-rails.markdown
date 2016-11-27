@@ -2,8 +2,8 @@
 layout: post
 title: "caching with rails"
 date: 2013-01-30 19:37
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 ### 1.Page caching

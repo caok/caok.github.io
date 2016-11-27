@@ -2,8 +2,8 @@
 layout: post
 title: "adobe air"
 date: 2013-06-03 15:56
-comments: true
 categories: [Web]
+tags: [Web]
 ---
 
 ### 1.[安装](http://help.adobe.com/en_US/air/build/WS2d8d13466044a7337d7adee012406959c52-8000.html#WS2d8d13466044a7334d609ef512411141082-8000)

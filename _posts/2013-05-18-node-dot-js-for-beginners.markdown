@@ -2,8 +2,8 @@
 layout: post
 title: "Node.js for Beginners"
 date: 2013-05-18 14:58
-comments: true
 categories: [NodeJs]
+tags: [NodeJs, Web]
 ---
 
 刚换了份工作，需要开始接触nodejs这块的东西，正好可以好好补习下javascript相关的。nodejs还是个特别好的技术，跟传统的LAMP等架构有很大的不同。废话不多说，赶紧试下先。

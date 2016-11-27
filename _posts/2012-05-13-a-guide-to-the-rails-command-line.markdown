@@ -2,8 +2,8 @@
 layout: post
 title: "A Guide to The Rails Command Line"
 date: 2012-05-13 21:09
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 rails

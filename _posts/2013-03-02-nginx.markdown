@@ -2,8 +2,8 @@
 layout: post
 title: "nginx"
 date: 2013-03-02 16:49
-comments: true
 categories: [Nginx]
+tags: [Nginx]
 ---
 
 Nginx 是一个高性能的 HTTP 和 反向代理 服务器，也是最流行的web服务器之一。最近我尝试了下，记录下它最简单的使用。

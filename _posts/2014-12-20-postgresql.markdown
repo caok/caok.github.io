@@ -2,7 +2,8 @@
 layout: post
 title:  "PostgreSQL"
 date:   2014-12-20 22:10:57
-categories: postgresql
+categories: [DB]
+tags: [Postgresql]
 ---
 
 ### 安装

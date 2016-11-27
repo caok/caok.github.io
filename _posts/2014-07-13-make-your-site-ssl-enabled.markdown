@@ -2,8 +2,8 @@
 layout: post
 title: "make your site ssl enabled"
 date: 2014-07-13 08:21
-comments: true
 categories: [Web]
+tags: [Web, SSL]
 ---
 
 ssl是什么，ssl就是你在网址里面看到的https。区别于http，如果是ssl的，那么他所传输的数据是保密的， 别人无法根据监听网络偷取你的信用卡数据，登录密码。现在国内的银行等大型网站基本上都支持ssl了。

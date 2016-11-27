@@ -2,8 +2,8 @@
 layout: post
 title: "Deploying a Rails app on Nginx/Unicorn with Capistrano"
 date: 2013-03-10 17:00
-comments: true
-categories: [Rails, Nginx, Capistrano, Unicorn]
+categories: [Rails]
+tags: [Rails, Nginx, Capistrano, Unicorn]
 ---
 
 之前分别介绍了下capistrano和nginx的使用，这里汇总一下，大致介绍下用上述工具部署rails项目的设置。

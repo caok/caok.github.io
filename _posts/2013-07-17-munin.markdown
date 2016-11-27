@@ -2,8 +2,8 @@
 layout: post
 title: "A networked resource monitoring tool Munin"
 date: 2013-07-17 21:50
-comments: true
 categories: [Ubuntu]
+tags: [Ubuntu]
 ---
 
 [Munin](http://munin-monitoring.org) 是一个非常好用安装和设置方便的监测软件，可监控核心系统资源，包括内存、磁盘、CPU 占用、服务器应用如 MySQL、Apache 和 Squid 等。

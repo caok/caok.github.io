@@ -2,8 +2,8 @@
 layout: post
 title: "socket.io"
 date: 2013-11-25 19:20
-comments: true
 categories: [NodeJs]
+tags: [NodeJs]
 ---
 
 {% highlight javascript %}

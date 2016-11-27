@@ -4,6 +4,7 @@ title: "在linux中配置开发环境"
 date: 2013-01-11 22:39
 comments: true
 categories: [Ubuntu]
+tags: [Ubuntu]
 ---
 
 最近重装了下系统，换成了Mint Linux,就将看到的一些关于开发环境配置的重新整理了下，主要是参考老大写的

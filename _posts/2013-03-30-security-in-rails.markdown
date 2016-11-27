@@ -2,8 +2,8 @@
 layout: post
 title: "Security in Rails"
 date: 2013-03-30 22:35
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 平时开发时一般都很少考虑网站的安全性，但这一块却又是开发应用时必须要考虑到的。Rails默认已经帮我们做了很多这方面的处理，但我们也有必要去了解下。

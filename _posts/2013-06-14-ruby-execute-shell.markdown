@@ -2,8 +2,8 @@
 layout: post
 title: "ruby execute shell"
 date: 2013-06-14 17:01
-comments: true
 categories: [Ruby]
+tags: [Ruby]
 ---
 
 这里介绍几种ruby调用shell命令的方法。

@@ -2,8 +2,8 @@
 layout: post
 title: "web development with express"
 date: 2013-05-19 15:56
-comments: true
 categories: [NodeJs]
+tags: [NodeJs, Web]
 ---
 
 简单介绍了下Node.js之后，势必要介绍下node.js的web开发框架[Express](https://github.com/visionmedia/express).

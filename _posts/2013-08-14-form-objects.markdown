@@ -2,8 +2,8 @@
 layout: post
 title: "form objects"
 date: 2013-08-14 22:41
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 ### Form Object

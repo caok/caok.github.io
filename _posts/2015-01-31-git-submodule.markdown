@@ -2,7 +2,8 @@
 layout: post
 title:  "Git Submodule"
 date:   2015-01-31 22:10:57
-categories: git
+categories: [Git]
+tags: [Git]
 ---
 
 ### 子模块(submodule)

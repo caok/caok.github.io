@@ -2,8 +2,8 @@
 layout: post
 title: "send mail by ruby"
 date: 2012-07-25 21:30
-comments: true
-categories: [Ruby, Mail]
+categories: [Ruby]
+tags: [Ruby, Mail]
 ---
 
 利用ruby查询当前的外网的ip地址并将其发送到指定的邮箱，同时增加了发送附件的例子。

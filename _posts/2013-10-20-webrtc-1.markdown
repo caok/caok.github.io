@@ -2,8 +2,8 @@
 layout: post
 title: "webrtc #1"
 date: 2013-10-20 18:01
-comments: true
 categories: [Webrtc]
+tags: [Webrtc]
 ---
 
 [WebRTC](http://baike.baidu.com/link?url=289QXkD87LZ5-53jqXJuodPjs-MSUTWxM6BLTo0irWLfwATizLYxgns65ouuJEOct8Tk5qmgjByg9ckstv-c5_)，名称源自网页实时通信(Web Real-Time Communication)的缩写，是一个支持网页浏览器进行实时语音对话或视频对话的技术。WebRTC实现了基于网页的视频会议，标准是WHATWG 协议，目的是通过浏览器提供简单的javascript就可以达到实时通讯（Real-Time Communications (RTC)）能力。

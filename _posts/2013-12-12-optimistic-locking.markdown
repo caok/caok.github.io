@@ -2,8 +2,8 @@
 layout: post
 title: "Optimistic Locking"
 date: 2013-12-12 00:22
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 业务逻辑的实现过程中，往往需要保证数据访问的排他性。此时，我们就需要通过一些机制来保证这些数据在某个操作过程中不会被外界修改，这样的机制，在这里，也就是所谓的“ 锁 ”，即给我们选定的目标数据上锁，使其无法被其他程序修改。

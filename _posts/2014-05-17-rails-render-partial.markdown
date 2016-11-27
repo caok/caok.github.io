@@ -2,8 +2,8 @@
 layout: post
 title: "rails render partial"
 date: 2014-05-17 14:08
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 ### 1. 默认参数

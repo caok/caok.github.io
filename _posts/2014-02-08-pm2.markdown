@@ -2,8 +2,8 @@
 layout: post
 title: "pm2"
 date: 2014-02-08 16:27
-comments: true
 categories: [NodeJs]
+tags: [NodeJs]
 ---
 
 [PM2](https://github.com/Unitech/pm2) 用于在生产环境运行 node 应用。它会监控你的 app 变化并重新部署它们，不同之处在于，如果 PM2 遇到事故，它将立刻重启你的 node.js 应用，而且拥有日志功能。

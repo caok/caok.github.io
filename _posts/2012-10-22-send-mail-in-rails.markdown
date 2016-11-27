@@ -2,8 +2,8 @@
 layout: post
 title: "send mail in rails"
 date: 2012-10-22 17:49
-comments: true
-categories: [Rails, Web, Mail]
+categories: [Rails]
+tags: [Rails, Web, Mail]
 ---
 
 #### 1.Create A Notice Mailer

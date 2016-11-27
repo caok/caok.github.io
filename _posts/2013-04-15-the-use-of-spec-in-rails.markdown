@@ -2,8 +2,8 @@
 layout: post
 title: "testing rails app #2"
 date: 2013-04-15 21:29
-comments: true
-categories: [Rails, Rspec, Test]
+categories: [Rails, Test]
+tags: [Rails, Rspec, Test]
 ---
 
 在上一篇简单介绍了下[在rails中安装rspec的方法](http://caok1231.com/blog/2013/04/10/testing-rails-app/)，现在接着介绍下rspec中的一些具体用法。

@@ -1,8 +1,9 @@
 ---
 layout: post
 title: "Rspec test for view"
-comments: true
 date: 2015-06-01 16:30
+categories: [Rails, Test]
+tags: [Rails, Test]
 ---
 
 在rspec中可以对view进行简单的测试,我们这简单介绍下

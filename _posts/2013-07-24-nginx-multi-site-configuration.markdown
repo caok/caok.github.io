@@ -2,8 +2,8 @@
 layout: post
 title: "Nginx multi-site configuration"
 date: 2013-07-24 09:43
-comments: true
 categories: [Nginx, Ubuntu]
+tags: [Nginx, Ubuntu]
 ---
 
 简单介绍下nginx配置多个站点的情况。

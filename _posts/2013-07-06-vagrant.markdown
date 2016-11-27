@@ -2,8 +2,8 @@
 layout: post
 title: "vagrant"
 date: 2013-07-06 20:21
-comments: true
 categories: [Ubuntu]
+tags: [Ubuntu]
 ---
 
 Vagrant是一个基于Ruby的工具，用于创建和部署虚拟化开发环境。它使用Oracle的开源VirtualBox虚拟化系统，使用Chef创建自动化虚拟环境。

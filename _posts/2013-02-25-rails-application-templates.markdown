@@ -2,8 +2,8 @@
 layout: post
 title: "Rails Application Templates"
 date: 2013-02-25 22:26
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 在初始化每个项目的时候都会做一些重复的工作，可以使用Rails的template避免重复劳动。

@@ -2,8 +2,8 @@
 layout: post
 title: "多态关联"
 date: 2013-02-20 20:17
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 所谓多态关联，就是一个model可以通过单一的关联从属于多个model。比如article、photo、event等都需要评论(comment)，如果没有多态关联，就需要为每个model都建立属于自己的comment model，这样代码会有很多的重复。通过[polymorphic-associations](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations)就可以只建立一个comment model，然后让每一条comment知道自己属于哪个model就可。

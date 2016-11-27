@@ -2,8 +2,8 @@
 layout: post
 title: "deploy rails app with mina"
 date: 2013-03-20 21:10
-comments: true
-categories: [Rails, Mina]
+categories: [Rails]
+tags: [Rails, Mina]
 ---
 
 capistrano是使用的最多的部署工具，最近社区中不少人开始推荐[mina](https://github.com/nadarei/mina),试着用了下部署的速度的确快了很多。虽然mina最近两个月都没有更新，不过仍然希望这个项目能得到很好的发展。

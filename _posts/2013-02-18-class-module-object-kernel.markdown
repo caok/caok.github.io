@@ -2,8 +2,8 @@
 layout: post
 title: "Class Module Object Kernel"
 date: 2013-02-18 20:26
-comments: true
 categories: [Ruby]
+tags: [Ruby]
 ---
 
 {% highlight ruby %}

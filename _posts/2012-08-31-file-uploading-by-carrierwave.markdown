@@ -2,8 +2,8 @@
 layout: post
 title: "file uploading by carrierwave"
 date: 2012-08-31 18:13
-comments: true
 categories: [Rails]
+tags: [Rails]
 ---
 
 #### 1.安装

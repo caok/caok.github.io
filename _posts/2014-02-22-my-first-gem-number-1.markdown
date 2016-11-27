@@ -2,8 +2,8 @@
 layout: post
 title: "my first gem #1"
 date: 2014-02-22 22:01
-comments: true
 categories: [Ruby]
+tags: [Ruby]
 ---
 
 最近报名参加了hayeah的公开ruby训练营实战教程，跟着去学习如何山寨一个mongoid orm。这里把学习的过程整理成博客，多数内容来自[ruby-bootcamp-mongoid](https://github.com/hayeah/ruby-bootcamp-mongoid), 这里翻译成中文并适当加入一些自己学习过程中了解到的一些知识。

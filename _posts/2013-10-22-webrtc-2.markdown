@@ -2,8 +2,8 @@
 layout: post
 title: "webrtc #2"
 date: 2013-10-22 18:42
-comments: true
 categories: [Webrtc]
+tags: [Webrtc]
 ---
 
 调用完摄像头之后，就是要进行流媒体通信了，这块也是webrtc中的核心。webrtc中实现了网页间的流媒体通信，特别要提的是它传送流媒体是p2p的，不需要通过server进行转发。

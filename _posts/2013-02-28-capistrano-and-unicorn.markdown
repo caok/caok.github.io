@@ -2,8 +2,8 @@
 layout: post
 title: "Capistrano and Unicorn"
 date: 2013-02-28 20:22
-comments: true
-categories: [Rails, Capistrano, Unicorn]
+categories: [Rails]
+tags: [Rails, Capistrano, Unicorn]
 ---
 
 * [capistrano](https://github.com/capistrano/capistrano) 是最常用来完成 rails 项目的远程多服务器自动化部署的工具。

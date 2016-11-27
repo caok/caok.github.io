@@ -2,8 +2,8 @@
 layout: post
 title: "updating octopress"
 date: 2013-02-02 19:38
-comments: true
-categories: [Octopress]
+categories: [Web]
+tags: [Octopress, Web]
 ---
 
 最近更新了下octopress，更新过程中由于不注意遇到了一些问题，特此将octopress的更新过程大致介绍下。

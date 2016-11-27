@@ -2,8 +2,8 @@
 layout: post
 title: "nodejs and extjs"
 date: 2013-06-18 15:08
-comments: true
-categories: [NodeJs, Extjs]
+categories: [Web]
+tags: [NodeJs, Extjs, Web]
 ---
 
 最近在看一些extjs和nodejs的东西，就试着将其结合着使用下。

@@ -2,8 +2,8 @@
 layout: post
 title: "Ruby require VS load VS include VS extend"
 date: 2013-02-08 22:27
-comments: true
 categories: [Ruby]
+tags: [Ruby]
 ---
 
 ## load

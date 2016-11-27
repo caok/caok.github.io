@@ -2,8 +2,8 @@
 layout: post
 title: "use twitter bootstrap in rails"
 date: 2012-10-22 17:50
-comments: true
-categories: [Rails, Bootstrap, Web]
+categories: [Rails]
+tags: [Rails, Bootstrap, Web]
 ---
 
 ### 1.Installing Gem
