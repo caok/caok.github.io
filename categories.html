@@ -4,12 +4,12 @@ title: Categories
 keywords: Categories
 ---
 
-<div class="categories">
-  <h3 class="title">{{ page.title }}</h3>
+<div class="categories post-content">
+  <h2><i class="fa fa-bookmark"></i> {{ page.title }}</h2>
   <ul class="category-items">
   {% assign categories_list = site.categories %}
   {% for category in categories_list %}
-    <li class="categories-item"><a href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category[0] }}-ref">
+    <li class="category-item"><a href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category[0] }}-ref">
       {{ category[0] | join: "/" }}
     </a></li>
   {% endfor %}
@@ -17,8 +17,8 @@ keywords: Categories
 
   <div class="category-list">
     {% for category in site.categories %} 
-      <h2 class="article-year" id="{{ category[0] }}-ref" data-year="&diams;">{{ category[0] | join: "/" }}</h2>
-      <ul>
+      <h3 class="category-name" id="{{ category[0] }}-ref">{{ category[0] | join: "/" }}</h3>
+      <ul class="posts">
         {% assign pages_list = category[1] %}  
         {% for node in pages_list %}
           {% if node.title != null %}

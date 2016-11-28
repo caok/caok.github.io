@@ -4,18 +4,22 @@ title: Archives
 keywords: Archives
 ---
 
-<div class="archives">
-  <h3 class="title">{{ page.title }}</h3>
+<div class="archives post-content">
+  <h2><i class="fa fa-bookmark"></i> {{ page.title }}</h2>
   {% capture post_year1 %}{{ 'now' | date: '%Y' }}{% endcapture %}
-  <ul class="article-year" data-year="{{ post_year1 }}">
+  <ul class="article-year posts" data-year="{{ post_year1 }}">
     {% for post in site.posts %}
       {% capture post_year2 %}{{ post.date | date: '%Y' }}{% endcapture %}
       {% if post_year1 != post_year2 %}
         {% assign post_year1 = post_year2 %}
         </ul>
-        <ul class="article-year" data-year="{{ post_year1 }}">
+        <ul class="article-year posts" data-year="{{ post_year1 }}">
       {% endif %}
-      <li class="fn-clear"><span>{{ post.date |  date: '%b %d' }}</span><a href="{{site.url}}{{ post.url }}">{{ post.title }}</a></li>
+      <li>
+        <span class='date'>{{ post.date | date: '%b %d' }}</span>
+        <span> &raquo; </span>
+        <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      </li>
     {% endfor %}
   </ul>
 </div>

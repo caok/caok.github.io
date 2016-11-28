@@ -211,7 +211,9 @@
     margin-bottom: $spacing-unit;
 
     h2 {
-        font-size: 32px;
+        font-size: 24px;
+        line-height: 30px;
+        color: #3498db;
 
         @include media-query($on-laptop) {
             font-size: 28px;
@@ -232,5 +234,38 @@
         @include media-query($on-laptop) {
             font-size: 18px;
         }
+    }
+
+    ul.posts {
+      margin-top: 0;
+      list-style-type: none;
+      margin-bottom: 10px;
+      margin-left: 0px;
+      li {
+        line-height: 24px;
+        font-size: 16px;
+        margin-bottom: 0px;
+        span {
+          color: #aaa;
+          padding-right: 5px;
+          font-size: 14px;
+          &.date {
+            width: 85px;
+            display: block;
+            float: left;
+          }
+        }
+        a {
+          color: #3498db;
+          font-weight: bolder;
+          text-decoration: none;
+          &:hover {
+            color: #333;
+          }
+          &:visited {
+            color: #3498db;
+          }
+        }
+      }
     }
 }
