@@ -58,6 +58,7 @@ server {
 最后你可以在[ssllabs](https://www.ssllabs.com/ssltest/index.html)上检测ssl最终的情况.
 
 #### 6.提升评分等级
+
 ##### Fixing the "Weak Diffie-Hellman"
 {% highlight bash %}
 openssl dhparam -out /etc/ssl/dhparams2048.pem 2048
