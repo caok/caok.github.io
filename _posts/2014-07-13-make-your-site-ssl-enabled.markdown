@@ -25,7 +25,7 @@ openssl req -new -newkey rsa:2048 -nodes -keyout domain.key -out domain.csr
 #### 3.將生成的csr文件中的內容拷貝到你的ssl账户中
 过一段时间后,你就能收到最终的证书(两个crt文件)
 
-#### 4,在nginx中配置SSL certificate chains
+#### 4.在nginx中配置SSL certificate chains
 {% highlight bash %}
 cat domain.crt bundle.crt > domain.chained.crt
 {% endhighlight %}
@@ -55,10 +55,50 @@ server {
 {% endhighlight %}
 
 #### 5.检测
-最后你可以在[sslcheck](https://sslcheck.casecurity.org)上检测ssl最终的情况.
+最后你可以在[ssllabs](https://www.ssllabs.com/ssltest/index.html)上检测ssl最终的情况.
+
+#### 6.提升评分等级
+##### Fixing the "Weak Diffie-Hellman"
+{% highlight bash %}
+openssl dhparam -out /etc/ssl/dhparams2048.pem 2048
+{% endhighlight %}
+在nginx配置中增加:
+{% highlight bash %}
+ssl_dhparam /etc/ssl/dhparams2048.pem
+{% endhighlight %}
+
+所以nginx中关于ssl的完整配置为
+{% highlight bash %}
+listen 443 ssl;
+server_name caok1231.com;
+ssl on;
+ssl_certificate /etc/nginx/ssl/*.crt;
+ssl_certificate_key /etc/nginx/ssl/*.key;
+ssl_session_timeout 1d;
+ssl_session_cache shared:SSL:50m;
+
+# Diffie-Hellman parameter for DHE ciphersuites, recommended 2048 bits
+ssl_dhparam /etc/ssl/dhparams2048.pem;
+
+# intermediate configuration
+ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+ssl_ciphers 'ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS';
+ssl_prefer_server_ciphers on;
+
+# OCSP
+ssl_stapling on;
+ssl_stapling_verify on;
+
+# HSTS (ngx_http_headers_module is required) (15768000 seconds = 6 months)
+add_header Strict-Transport-Security max-age=15768000;
+{% endhighlight %}
+
 
 ### 备注:
 * http://wongyouth.com/blog/2013/01/05/make-your-site-ssl-enabled/
 * https://hisea.me/p/ssl-config-with-nginx
 * http://nginx.org/en/docs/http/configuring_https_servers.html#chains
 * http://support.godaddy.com/help/article/3601/generating-a-certificate-signing-request-nginx
+* https://www.codeproject.com/articles/1107743/webcontrols/
+* http://www.claudioborges.org/?p=521
+* https://www.peterdavehello.org/2015/10/build-an-a-plus-best-practice-https-web-server-via-nginx-chinese-version/
