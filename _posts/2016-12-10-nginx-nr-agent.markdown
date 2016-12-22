@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "nginx nr agent"
-date:   2016-11-24 22:49:20 +0800
+date:   2016-12-10 22:00:00 +0800
 categories: [Ubuntu]
 tags: [Ubuntu Nginx]
 ---
