@@ -24,12 +24,27 @@ tags: [NodeJs]
 npm install pm2@latest -g
 {% endhighlight %}
 
+### 开机自启
+{% highlight bash %}
+pm2 start app.js
+pm2 save   # 保存当前进程状态
+sudo pm2 startup ubuntu  # 生成开机自启动的命令(会导致后续的pm2命令也需要加上sudo才行)
+{% endhighlight %}
+
+### 负载均衡
+{% highlight bash %}
+pm2 start app.js -i 3 # 开启三个进程
+pm2 start app.js -i max # 根据机器CPU核数，开启对应数目的进程 
+{% endhighlight %}
+
 ### 用法
 {% highlight bash %}
 $ pm2 start app.js -i 4           # 后台运行pm2，启动4个app.js 
                                   # 也可以把'max' 参数传递给 start
                                   # 正确的进程数目依赖于cpu的核心数目
 $ pm2 start app.js --name my-api  # 命名进程
+
+$ pm2 start app.js --max-memory-restart 20M  # 内存使用超过上限自动重启
 
 $ pm2 list                        # 显示所有进程状态
 $ pm2 list -m                     # Serious display
@@ -58,3 +73,4 @@ $ pm2 resurrect                   # 存储备份
 * https://github.com/Unitech/pm2
 * http://www.douban.com/note/314200231
 * http://devo.ps/blog/2013/06/26/goodbye-node-forever-hello-pm2.html
+* https://www.cnblogs.com/chyingp/p/pm2-documentation.html

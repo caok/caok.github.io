@@ -11,7 +11,7 @@ tags: [Ubuntu Nginx]
 这里我们介绍下怎么调整日志的分割频率
 
 
-##### 修改配置nginx日志配置文件
+#### 修改配置nginx日志配置文件
 位置： **/etc/logrotate.d/nginx**
 
 {% highlight shell %}
@@ -50,7 +50,7 @@ tags: [Ubuntu Nginx]
 * olddir directory：转储后的日志文件放入指定的目录，必须和当前日志文件在同一个文件系统
 * size size：当日志文件到达指定的大小时才转储，Size 可以指定 bytes (缺省)以及KB (sizek)或者MB
 
-##### 测试
+#### 测试
 {% highlight shell %}
 sudo logrotate -f /etc/logrotate.d/nginx
 {% endhighlight %}
